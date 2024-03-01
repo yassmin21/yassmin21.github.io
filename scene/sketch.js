@@ -47,7 +47,7 @@ function drawPlayer() {
   rect(player.x  , player.y , 40, 40);
 }
 function keyPressed() {
-  if (keyCode === UP_ARROW) {
+  if (keyCode === UP_ARROW ) {
     player.y -= 40;
   } else if (keyCode === DOWN_ARROW) {
     player.y += 40;
