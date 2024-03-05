@@ -1,7 +1,7 @@
 //i need to draw the maze done
 //draw the moving thing done
 //move it using arrows done
-// dont let it go grough walls
+// dont let it go grough walls done
 //mouse change scene idk what tho ahhhh
 //end screen
 //(640, 400)
@@ -100,7 +100,7 @@ function done() {
 }
 function randomcolour(){
   fill('pink');
-  if(mouseWheel()){
+  if(mouseButton === RIGHT){
   let c = random(['red', 'pink', 'black']);
   fill(c);
   }
