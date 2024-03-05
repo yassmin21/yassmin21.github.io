@@ -45,7 +45,7 @@ function drawMaze() {
   for (let i = 0; i < maze.length; i++) {
     for (let j = 0; j < maze[i].length; j++) {
       if (maze[i][j] === 1) {
-        fill("green"); // Wall
+        fill('green');
       } else {
         fill(255); // Open space
       }
@@ -55,7 +55,7 @@ function drawMaze() {
 }
 
 function drawPlayer() {
-  fill("pink");
+  randomcolour();
   rect(player.x * 40, player.y * 40, 40, 40);
 }
 
@@ -97,7 +97,11 @@ function done() {
   background("white");
   textSize(50);
   text("YOU WIN", windowWidth / 2 - 100, windowHeight / 2 - 50);
-  if (mouseIsPressed) {
-    state = "before";
+}
+function randomcolour(){
+  fill('pink');
+  if(mouseWheel()){
+  let c = random(['red', 'pink', 'black']);
+  fill(c);
   }
 }
