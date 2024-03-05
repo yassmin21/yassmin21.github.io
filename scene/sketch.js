@@ -35,9 +35,13 @@ function draw() {
   } else if (state === "play") {
     drawMaze();
     drawPlayer();
+    time();
   } else if (state === "done") {
     done();
+  } else if(state === "loose"){
+    loose();
   }
+
 }
 
 function drawMaze() {
@@ -55,7 +59,8 @@ function drawMaze() {
 }
 
 function drawPlayer() {
-  randomcolour();
+  fill("pink");
+  randomcolour;
   rect(player.x * 40, player.y * 40, 40, 40);
 }
 
@@ -99,9 +104,26 @@ function done() {
   text("YOU WIN", windowWidth / 2 - 100, windowHeight / 2 - 50);
 }
 function randomcolour(){
-  fill('pink');
-  if(mouseButton === RIGHT){
-  let c = random(['red', 'pink', 'black']);
-  fill(c);
+  fill("pink");
+  if(mouseButton === LEFT){
+    let c = random(['red', 'pink', 'black']);
+    fill(c);
   }
+}
+
+function time(){
+  if(state === "play"){
+    textSize(40);
+    let millisecond = int(millis()/1000);
+    text(millisecond, 590, 34);
+    if(millisecond > 30){
+      state = 'loose';
+    }
+  }
+}
+
+function loose(){
+  background("white");
+  textSize(50);
+  text("YOU LOOSE", windowWidth / 2 - 100, windowHeight / 2 - 50);
 }
