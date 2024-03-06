@@ -49,7 +49,7 @@ function drawMaze() {
   for (let i = 0; i < maze.length; i++) {
     for (let j = 0; j < maze[i].length; j++) {
       if (maze[i][j] === 1) {
-        fill('green');
+        fill("green");
       } else {
         fill(255); // Open space
       }
@@ -60,7 +60,6 @@ function drawMaze() {
 
 function drawPlayer() {
   fill("pink");
-  randomcolour;
   rect(player.x * 40, player.y * 40, 40, 40);
 }
 
@@ -79,8 +78,28 @@ function keyPressed() {
 function startScreenDisplay() {
   background("pink");
   textSize(20);
-  rect(windowWidth / 2 - 90, windowHeight / 2 - 25, 150, 40);
+  rect(width / 2 - 90, height / 2 - 25, 150, 40);
   text("PLAY", windowWidth / 2 - 40, windowHeight / 2);
+
+  rect(width/2 - 300 , height/2 + 50 ,  150, 40);
+  text("EASY", width / 2 - 300, height / 2 + 75);
+
+  rect(width / 2 - 90, height / 2 + 50, 150, 40);
+  text("MEDIUM", windowWidth / 2 - 40, windowHeight / 2 + 75);
+
+  rect(width/2 + 130 , height/2 + 50 ,  150, 40);
+  text("HARD", windowWidth / 2 - 40, windowHeight / 2 + 75);
+}
+
+function easy(){
+}
+
+function medium(){
+  
+}
+
+function hard(){
+
 }
 
 function changeState() {
@@ -100,16 +119,11 @@ function changeState() {
 
 function done() {
   background("white");
+  fill("green");
   textSize(50);
   text("YOU WIN", windowWidth / 2 - 100, windowHeight / 2 - 50);
 }
-function randomcolour(){
-  fill("pink");
-  if(mouseButton === LEFT){
-    let c = random(['red', 'pink', 'black']);
-    fill(c);
-  }
-}
+
 
 function time(){
   if(state === "play"){
@@ -117,7 +131,7 @@ function time(){
     let millisecond = int(millis()/1000);
     text(millisecond, 590, 34);
     if(millisecond > 30){
-      state = 'loose';
+      state = "loose";
     }
   }
 }
