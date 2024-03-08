@@ -113,6 +113,7 @@ function level(){
 }
 
 function easy(){
+  textSize(40);
   let millisecond = int(millis()/1000);
   text(millisecond, 590, 34);
   if(millisecond > 30){
@@ -133,6 +134,7 @@ function medium(){
 
 function hard(){
   textSize(40);
+  let gameTime = 0;
   let millisecond = int(millis()/1000);
   text(millisecond, 590, 34);
   if(state === "hard"){
@@ -161,7 +163,8 @@ function changeState() {
   if(mouseIsPressed && mouseX > width/ 2 - 90 && mouseY > height/2 + 50){
     state = "medium";
   }
-  if(mouseIsPressed){
+  if(mouseIsPressed && mouseX > width/2 + 130 && mouseY > height/2 + 50){
+    state = "hard";
   }
 }
 
