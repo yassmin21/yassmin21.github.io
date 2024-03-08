@@ -37,6 +37,9 @@ function draw() {
     if(state === "easy"){
     drawMaze();
     drawPlayer();
+    easy();
+    medium();
+    hard();
     time();
     }
   } else if (state === "done") {
@@ -87,13 +90,13 @@ function startScreenDisplay() {
 
 function level(){
   rect(width/2 - 300 , height/2 + 50 ,  150, 40);
-  text("EASY", width / 2 - 300, height / 2 + 75);
+  text("EASY", width / 2 - 257, height / 2 + 75);
 
   rect(width / 2 - 90, height / 2 + 50, 150, 40);
-  text("MEDIUM", windowWidth / 2 - 40, windowHeight / 2 + 75);
+  text("MEDIUM", windowWidth / 2 - 52, windowHeight / 2 + 75);
 
   rect(width/2 + 130 , height/2 + 50 ,  150, 40);
-  text("HARD", windowWidth / 2 - 40, windowHeight / 2 + 75);
+  text("HARD", windowWidth / 2 + 175, windowHeight / 2 + 75);
 }
 
 function easy(){
@@ -120,6 +123,9 @@ function changeState() {
   if (player.y * 40 === 320 && player.x * 40 === 600) {
     state = "done";
   }
+  if(mouseIsPressed && mouseX > ){
+    state = "easy;"
+  }
 }
 
 function done() {
@@ -131,11 +137,21 @@ function done() {
 
 
 function time(){
-  if(state === "play"){
-    textSize(40);
+  textSize(40);
     let millisecond = int(millis()/1000);
     text(millisecond, 590, 34);
+  if(state === "easy"){
     if(millisecond > 30){
+      state = "loose";
+    }
+  }
+  if(state === "medium"){
+    if(milisecond > 20){
+      state = "loose";
+    }
+  }
+  if(state === "hard"){
+    if(milisecond > 10){
       state = "loose";
     }
   }
