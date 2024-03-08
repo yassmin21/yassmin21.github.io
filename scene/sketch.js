@@ -33,9 +33,12 @@ function draw() {
   if (state === "before") {
     startScreenDisplay();
   } else if (state === "play") {
+    level();
+    if(state === "easy"){
     drawMaze();
     drawPlayer();
     time();
+    }
   } else if (state === "done") {
     done();
   } else if(state === "loose"){
@@ -80,7 +83,9 @@ function startScreenDisplay() {
   textSize(20);
   rect(width / 2 - 90, height / 2 - 25, 150, 40);
   text("PLAY", windowWidth / 2 - 40, windowHeight / 2);
+}
 
+function level(){
   rect(width/2 - 300 , height/2 + 50 ,  150, 40);
   text("EASY", width / 2 - 300, height / 2 + 75);
 
