@@ -162,7 +162,6 @@ function changeState() {
     state = "medium";
   }
   if(mouseIsPressed){
-    
   }
 }
 
