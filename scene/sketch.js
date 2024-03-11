@@ -1,15 +1,8 @@
-//i need to draw the maze done
-//draw the moving thing done
-//move it using arrows done
-// dont let it go grough walls done
-//mouse change scene idk what tho ahhhh done
-//end screen done
-// fix bottons easy medium hard done
 // fix millis
 // make text pretty
 //syntax fix
 //make things clear
-//(640, 400)
+//(640, 400) is the maze size
 const maze = [
   [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
@@ -22,16 +15,18 @@ const maze = [
   [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ];
+
 const player = {
   x: 0,
   y: 0,
 };
-let state = "before";
-let resettime = 0;
+
+let state = "before"; // sets state to before
+let l = 150; // text boxes width
+let h = 40; // text boxes height
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  S = 0;
 }
 
 function draw() {
@@ -65,10 +60,10 @@ function draw() {
 
 function drawMaze() {
   background("white");
-  for (let i =0; i < maze.length; i++) {
+  for (let i = 0; i < maze.length; i++) {
     for (let j = 0; j < maze[i].length; j++) {
       if (maze[i][j] === 1) {
-        fill("green");
+        fill("green"); // wall
       }
       else {
         fill(255); // Open space
@@ -80,20 +75,20 @@ function drawMaze() {
 
 function drawPlayer() {
   fill("pink");
-  rect(player.x * 40, player.y * 40, 40, 40);
+  rect(player.x * 40, player.y * 40, 40, 40); // draw player 
 }
 
 function keyPressed() {
-  if (keyCode === UP_ARROW && maze[player.y - 1][player.x] === 0) {
+  if (keyCode === UP_ARROW && maze[player.y - 1][player.x] === 0) { // move player up
     player.y -= 1;
   }
-  else if (keyCode === DOWN_ARROW && maze[player.y + 1][player.x] === 0) {
+  else if (keyCode === DOWN_ARROW && maze[player.y + 1][player.x] === 0) { //move player down
     player.y += 1;
   }
-  else if (keyCode === LEFT_ARROW && maze[player.y][player.x - 1] === 0) {
+  else if (keyCode === LEFT_ARROW && maze[player.y][player.x - 1] === 0) { //move player left
     player.x -= 1;
   }
-  else if (keyCode === RIGHT_ARROW && maze[player.y][player.x + 1] === 0) {
+  else if (keyCode === RIGHT_ARROW && maze[player.y][player.x + 1] === 0) { // move player right
     player.x += 1;
   }
 }
@@ -101,58 +96,45 @@ function keyPressed() {
 function startScreenDisplay() {
   background("pink");
   textSize(20);
-  rect(width/2 - 300 , height/2  - 25,  150, 40);
-  text("EASY", width / 2 - 257, height / 2);
+  rect(width/2 - 300 , height/2  - 25,  l, h);
+  text("EASY", width / 2 - 257, height / 2); // draw easy button
 
-  rect(width / 2 - 90, height / 2 - 25, 150, 40);
-  text("MEDIUM", windowWidth / 2 - 52, windowHeight / 2);
+  rect(width / 2 - 90, height / 2 - 25, l, h);
+  text("MEDIUM", width / 2 - 52, height / 2); // draw medium button
 
-  rect(width/2 + 130 , height/2 -25,  150, 40);
-  text("HARD", windowWidth / 2 + 175, windowHeight / 2);
+  rect(width/2 + 130 , height/2 -25,  l, h);
+  text("HARD", width / 2 + 175, height / 2); // draw hard button
 }
 
 function easy(){
+  let millisecond = int(millis()/1000); // set millis
   textSize(40);
-  let millisecond = int(millis()/1000);
-  text(millisecond, 590, 34);
+  text(millisecond, 590, 34); // draw timer
   if(millisecond >= 25){
-    state = "loose";
+    state = "loose"; // set time diffulity 
   }
 }
 
 function medium(){
+  let millisecond = int(millis()/1000); // set millis
+  let gametime;
+  let starttime;
+  if (millisecond > 0 && gametime === 0){
+    console.log(starttime = millisecond);
+    gametime = millisecond - starttime;
+  }
   textSize(40);
-  // let millisecond = int(millis()/1000);
-  // let gametime = 0;
-  // if (millisecond > 0 && gametime === 0){
-  //   millisecond = 0;
-  //   gametime = millisecond
-  // }
-  let S;
-  let t=0;
-  let dt=0.1;
-  if (S===1){
-    t=t+dt;
-    }
-  text(t, 590, 34);
-  if(t >= 15){
+  text(gametime, 590, 34);
+  if(gametime >= 15){
       state = "loose";
     }
 }
-function touchStarted(){
-  if (S===0){
-  S=1;
-  }
-  else{
-  S=0;
-  }
-}
 
 function hard(){
+  let millisecond = int(millis()/1000); // set millis
   textSize(40);
-  let millisecond = int(millis()/1000);
   text(millisecond, 590, 34);
-  if(millisecond >= 10){
+  if(millisecond >= 5){
       state = "loose";
     }
 }
@@ -160,18 +142,21 @@ function hard(){
 function changeState() {
   if (player.y * 40 === 320 && player.x * 40 === 600) {
     state = "win";
-  }
+  } // determines if the player is at the end and sets state to win
   
-  if(mouseIsPressed &&  mouseY > windowHeight / 2 - 25 && mouseY < windowHeight / 2 + 15){
-    if (mouseX > windowWidth / 2 - 90 && mouseX < windowWidth / 2 + 60) {
-      state = "medium";
-    }
+  if(state === "before" && mouseIsPressed &&  mouseY > height / 2 - 25 && mouseY < height / 2 + 15){
     if(mouseX > width/2 - 300 && mouseX < width/2 - 150){
-        state = "easy";
-      }
-    if(mouseX > width/2 + 130 && mouseX < width/2 + 280){
-        state = "hard";
+        state = "easy"; // changes state to easy if the easy button is pressed
     }
+    if (mouseX > width / 2 - 90 && mouseX < width / 2 + 60) {
+      state = "medium"; // changes state to medium if the medium button is pressed
+    }
+    if(mouseX > width/2 + 130 && mouseX < width/2 + 280){
+        state = "hard"; // changed state to hard if hard button is pressed
+    }
+  }
+  if(state === "loose" && mouseIsPressed && mouseX > width/2 - 25 && mouseX < width/2 + 125 && mouseY > width/2 && mouseY < width/2 + 40 ){
+    state = "before";
   }
 }
 
@@ -179,12 +164,22 @@ function win() {
   background("white");
   fill("green");
   textSize(50);
-  text("YOU WIN", windowWidth / 2 - 100, windowHeight / 2 - 50);
+  text("YOU WIN", windowWidth / 2 - 100, windowHeight / 2 - 50); // draws you win text in green and sets background to white
 }
 
 
 function loose(){
   background("white");
+  fill("red");
   textSize(50);
   text("YOU LOOSE", windowWidth / 2 - 100, windowHeight / 2 - 50);
+  fill("pink");
+  rect(width/2 - 25, height/2, l, h);
+  fill("white");
+  textSize(40);
+  text("retry", width/ 2, height/2 + 25);
+}
+
+function retry(){
+
 }
