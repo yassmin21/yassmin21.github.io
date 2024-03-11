@@ -20,7 +20,9 @@ const player = {
   x: 0,
   y: 0,
 };
-
+let starttime;
+let millisecond;
+let gametime;
 let state = "before"; // sets state to before
 let l = 150; // text boxes width
 let h = 40; // text boxes height
@@ -116,27 +118,25 @@ function easy(){
 }
 
 function medium(){
-  let millisecond = int(millis()/1000); // set millis
-  let gametime;
-  let starttime;
+  millisecond = int(millis()/1000); // set millis
+  starttime = millis();
   if (millisecond > 0 && gametime === 0){
-    console.log(starttime = millisecond);
-    gametime = millisecond - starttime;
+    millisecond - starttime;
   }
   textSize(40);
-  text(gametime, 590, 34);
-  if(gametime >= 15){
-      state = "loose";
-    }
+  text(millisecond, 590, 34);
+  if(millisecond >= 5){
+    state = "loose";
+  }
 }
 
 function hard(){
   let millisecond = int(millis()/1000); // set millis
   textSize(40);
   text(millisecond, 590, 34);
-  if(millisecond >= 5){
-      state = "loose";
-    }
+  if(millisecond >= 10){
+    state = "loose";
+  }
 }
 
 function changeState() {
@@ -146,13 +146,13 @@ function changeState() {
   
   if(state === "before" && mouseIsPressed &&  mouseY > height / 2 - 25 && mouseY < height / 2 + 15){
     if(mouseX > width/2 - 300 && mouseX < width/2 - 150){
-        state = "easy"; // changes state to easy if the easy button is pressed
+      state = "easy"; // changes state to easy if the easy button is pressed
     }
     if (mouseX > width / 2 - 90 && mouseX < width / 2 + 60) {
       state = "medium"; // changes state to medium if the medium button is pressed
     }
     if(mouseX > width/2 + 130 && mouseX < width/2 + 280){
-        state = "hard"; // changed state to hard if hard button is pressed
+      state = "hard"; // changed state to hard if hard button is pressed
     }
   }
   if(state === "loose" && mouseIsPressed && mouseX > width/2 - 25 && mouseX < width/2 + 125 && mouseY > width/2 && mouseY < width/2 + 40 ){
@@ -176,10 +176,6 @@ function loose(){
   fill("pink");
   rect(width/2 - 25, height/2, l, h);
   fill("white");
-  textSize(40);
+  textSize(30);
   text("retry", width/ 2, height/2 + 25);
-}
-
-function retry(){
-
 }
