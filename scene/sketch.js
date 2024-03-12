@@ -21,19 +21,16 @@ const player = {
   x: 0,
   y: 0,
 };
+let song;
 let starttime;
 let millisecond;
-let gametime;
 let state = "before"; // sets state to before
-let l = 150; // text boxes width
+let l = 150; // text boxes length
 let h = 40; // text boxes height
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  
-  if (state === "before"){
-    starttime = int(millis()/ 1000);
-  }
+  song = loadSound('assets/song.mp3');
 }
 
 function draw() {
@@ -145,7 +142,7 @@ function hard(){
   }
   textSize(40);
   text(millisecond, 590, 34);
-  if(millisecond >= 10){
+  if(millisecond >= 30){
     state = "loose";
   }
 }
@@ -166,9 +163,6 @@ function changeState() {
       state = "hard"; // changed state to hard if hard button is pressed
     }
   }
-  if(state === "loose" && mouseIsPressed && mouseX > width/2 - 25 && mouseX < width/2 + 125 && mouseY > width/2 && mouseY < width/2 + 40 ){
-    state = "before";
-  }
 }
 
 function win() {
@@ -184,9 +178,4 @@ function loose(){
   fill("red");
   textSize(50);
   text("YOU LOOSE", windowWidth / 2 - 100, windowHeight / 2 - 50);
-  fill("pink");
-  rect(width/2 - 25, height/2, l, h);
-  fill("white");
-  textSize(30);
-  text("retry", width/ 2, height/2 + 25);
 }
