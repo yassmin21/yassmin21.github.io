@@ -135,7 +135,7 @@ function hard(){
   }
   textSize(40);
   text(millisecond, 590, 34);
-  if(millisecond >= 30){
+  if(millisecond >= 10){
     state = "loose";
   }
 }
