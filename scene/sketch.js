@@ -1,9 +1,3 @@
-// fix millis donneee
-// add music for the extra thing
-// make text pretty
-//syntax fix
-//make things clear
-//(640, 400) is the maze size
 const maze = [
   [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
@@ -15,13 +9,13 @@ const maze = [
   [1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1],
   [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-];
+]; // draws the maze as a constant
 
 const player = {
   x: 0,
   y: 0,
 };
-let song;
+
 let starttime;
 let millisecond;
 let state = "before"; // sets state to before
@@ -30,7 +24,6 @@ let h = 40; // text boxes height
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  song = loadSound('assets/song.mp3');
 }
 
 function draw() {
@@ -112,9 +105,9 @@ function startScreenDisplay() {
 }
 
 function easy(){
-  millisecond = int(millis()/ 1000)
+  millisecond = int(millis()/ 1000);
   if (millisecond > 0){
-    millisecond = millisecond - starttime;
+    millisecond = millisecond - starttime; //minus the millis from total from millis of start screen
   }
   textSize(40);
   text(millisecond, 590, 34); // draw timer
@@ -129,7 +122,7 @@ function medium(){
     millisecond = millisecond - starttime;
   }
   textSize(40);
-  text(millisecond, 590, 34);
+  text(millisecond, 590, 34); 
   if(millisecond >= 15){
     state = "loose";
   }
