@@ -1,4 +1,5 @@
-// fix millis
+// fix millis donneee
+// add music for the extra thing
 // make text pretty
 //syntax fix
 //make things clear
@@ -29,6 +30,10 @@ let h = 40; // text boxes height
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  
+  if (state === "before"){
+    starttime = int(millis()/ 1000);
+  }
 }
 
 function draw() {
@@ -36,6 +41,7 @@ function draw() {
   changeState();
   if (state === "before") {
     startScreenDisplay();
+    starttime = int(millis()/ 1000);
   }
   else if(state === "easy"){
     drawMaze();
@@ -109,7 +115,10 @@ function startScreenDisplay() {
 }
 
 function easy(){
-  let millisecond = int(millis()/1000); // set millis
+  millisecond = int(millis()/ 1000)
+  if (millisecond > 0){
+    millisecond = millisecond - starttime;
+  }
   textSize(40);
   text(millisecond, 590, 34); // draw timer
   if(millisecond >= 25){
@@ -118,20 +127,22 @@ function easy(){
 }
 
 function medium(){
-  millisecond = int(millis()/1000); // set millis
-  starttime = millis();
-  if (millisecond > 0 && gametime === 0){
-    millisecond - starttime;
+  millisecond = int(millis()/ 1000)
+  if (millisecond > 0){
+    millisecond = millisecond - starttime;
   }
   textSize(40);
   text(millisecond, 590, 34);
-  if(millisecond >= 5){
+  if(millisecond >= 15){
     state = "loose";
   }
 }
 
 function hard(){
-  let millisecond = int(millis()/1000); // set millis
+  millisecond = int(millis()/ 1000)
+  if (millisecond > 0){
+    millisecond = millisecond - starttime;
+  }
   textSize(40);
   text(millisecond, 590, 34);
   if(millisecond >= 10){
