@@ -2,7 +2,8 @@
 ## demos
 - [traffic light](traffic light)
 - [Bouncing Ball](bouncingball)
--[collision demo](collision)
+- [collision demo](collision)
+- [generative art](06-art)
 
 
 ## projects
