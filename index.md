@@ -4,7 +4,9 @@
 - [Bouncing Ball](bouncingball)
 - [collision demo](collision)
 - [generative art](06-art)
+- [terraine generation](07-terrain)
 
 
 ## projects
 - [interactive scene](scene)
+- [array assignment](array)
