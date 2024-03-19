@@ -1,10 +1,11 @@
-// Project Title
-// Your Name
-// Date
+// flappy bird
+// Yassmin Ibrahim
 //
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
+let dot;
+let pillar;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -12,4 +13,8 @@ function setup() {
 
 function draw() {
   background(220);
+}
+
+function drawpillars(){
+  
 }
