@@ -5,7 +5,7 @@
 // - describe what you did to take this project "above and beyond"
 
 let bird = {
-
+ 
 };
 let pillar = [];
 
@@ -18,5 +18,6 @@ function draw() {
 }
 
 function drawpillars(){
-  
+  rect(100, 50, 20, 20);
+
 }
