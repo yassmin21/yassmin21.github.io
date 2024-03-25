@@ -5,6 +5,7 @@
 - [collision demo](collision)
 - [generative art](06-art)
 - [terraine generation](07-terrain)
+- [bubble movement](08-bubble)
 
 
 ## projects

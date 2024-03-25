@@ -7,23 +7,38 @@
 // let bird = {
  
 // };
-// let pillar;
+let pillarUpArray = [];
 
 function setup() {
-  createCanvas(400, 600);
-  // let top = random(height / 2);
-  // let bottom = random(height / 2);
-  // let w = 20;
+  createCanvas(700, 700);
+  for(let i = 0; i < 15; i++){
+    spawnPillarUp();
+  }
+
 }
 
 function draw() {
   background(0);
-  pillar();
+  displayPillar();
 }
 
-function pillar() {
-  let pillarHeight = random(30, height/2)
-  fill("white")
-  rect(20, 0, 20, pillarHeight);
-  
+
+
+function displayPillar(){
+  for(let pillars of pillarUpArray){
+    fill("white");
+    rect(pillars.x, pillars.y, pillars.PillarWidth, pillars.pillarHeight);
+    rect(pillars.x, 700, pillars.PillarWidth, pillars.pillarHeight);
+  }
 }
+
+function spawnPillarUp(){
+  let pillar ={
+    x: random(20, width),
+    y: 0,
+    PillarWidth: 20,
+    pillarHeight: random(30, height/2),
+  };
+  pillarUpArray.push(pillar);
+}
+
