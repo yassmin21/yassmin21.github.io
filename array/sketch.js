@@ -7,59 +7,85 @@
 // let bird = {
  
 // };
-let pillarUpArray = [];
-let pillarDownArray = [];
+
+let pillarArray = [];
+// let pillarDownArray = [];
 
 function setup() {
   createCanvas(700, 700);
   for(let i = 0; i < 5; i++){
-    spawnPillarUp();
-    spawnPillarDown();
+    spawnPillar();
+    // spawnPillarDown();
   }
 }
 
 function draw() {
   background(0);
-  displayPillarUP();
-  displayPillarDown();
+  displayPillars();
+  displayCircle();
+  colidedPillars();
+  // displayPillarDown();
 }
 
+function displayCircle(){
+  circle(30, height/2, 30);
+}
 
-
-function displayPillar(){
-  for(let pillars of pillarUpArray){
+function displayPillars(){
+  for(let pillars of pillarArray){
     fill("white");
-    rect(pillars.x, pillars.y, pillars.PillarWidth, pillars.pillarHeight);
-    // for(let i )
+    rect(pillars.x, pillars.yup, pillars.PillarWidth, pillars.pillarHeight);
+    rect(pillars.x, pillars.ydown, pillars.PillarWidth, pillars.pillarHeightDown);
   }
 }
 
 
-function displayPillar(){
-  for(let pillarsdowns of pillarDownArray){
-    fill("white");
-    rect(pillarsdowns.x, pillarsdowns.y, pillarsdowns.PillarWidth, pillarsdowns.pillarHeight2 );
-  }
-}
+// function displayPillar(){
+//   for(let pillarsdowns of pillarDownArray){
+//     fill("white");
+//     rect(pillarsdowns.x, pillarsdowns.y, pillarsdowns.PillarWidth, pillarsdowns.pillarHeight2 );
+//   }
+// }
 
-function spawnPillarDown(){
-  let pillardown ={
-    // x: pillar.x,
-    y: random(height/2 + 20, 700),
-    PillarWidth: 20,
-    pillarHeight2: random(height/2, 700),
-  };
-  pillarDownArray.push(pillardown);
-}
+// function spawnPillar(){
+//   let pillardown ={
+//     // x: pillar.x,
+//     y: random(height/2 + 20, 700),
+//     PillarWidth: 20,
+//     pillarHeight2: random(height/2, 700),
+//   };
+//   pillarDownArray.push(pillardown);
+// }
 
-function spawnPillarUp(){
+function spawnPillar(){
   let pillar ={
-    x: random(20, width),
-    y: 0,
+    x: random(20, width - 20),
+    yup: 0,
+    ydown: random(height/2 + 20, 600),
     PillarWidth: 20,
     pillarHeight: random(30, height/2),
+    pillarHeightDown: random(height/2, 600),
   };
-  pillarUpArray.push(pillar);
+  pillarArray.push(pillar);
 }
 
-//make them the same object
+
+// function colidedPillars(x, y, pillar){
+//   let distanceAway = dist(x, y, pillar.x, pillar.ydown);
+//   let radius = pillar.pillarwidth;
+//   if(distanceAway < pillarwidth){
+//     return true;
+//   }
+//   else{
+//     return false;
+//   }
+// }
+
+// function mousePressed(){
+//   for(let i = pillarArray.length-1; i>= 0; i--){
+//     if(colidedPillars(mouseX, mouseY, pillar[i])){
+//       //kill it
+//       pillarArray.splice(i, 1);
+//     }
+//   }
+// }
