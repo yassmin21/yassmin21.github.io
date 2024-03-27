@@ -9,27 +9,34 @@
 // };
 
 let pillarArray = [];
-// let pillarDownArray = [];
+let ycircle = 350;
 
 function setup() {
   createCanvas(700, 700);
   for(let i = 0; i < 5; i++){
     spawnPillar();
-    // spawnPillarDown();
   }
 }
 
 function draw() {
   background(0);
+  movepillarssWithNoise();
   displayPillars();
   displayCircle();
-  colidedPillars();
-  // displayPillarDown();
+  // movepillarsback();
+  // colidedPillars();
 }
 
 function displayCircle(){
-  circle(30, height/2, 30);
+  if(mouseIsPressed){
+    ycircle -= 1;
+  }
+  circle(30, ycircle, 30);
 }
+
+// function movepillarsback(x, pillar){
+//   pillar.x -= 50;
+// }
 
 function displayPillars(){
   for(let pillars of pillarArray){
@@ -40,23 +47,6 @@ function displayPillars(){
 }
 
 
-// function displayPillar(){
-//   for(let pillarsdowns of pillarDownArray){
-//     fill("white");
-//     rect(pillarsdowns.x, pillarsdowns.y, pillarsdowns.PillarWidth, pillarsdowns.pillarHeight2 );
-//   }
-// }
-
-// function spawnPillar(){
-//   let pillardown ={
-//     // x: pillar.x,
-//     y: random(height/2 + 20, 700),
-//     PillarWidth: 20,
-//     pillarHeight2: random(height/2, 700),
-//   };
-//   pillarDownArray.push(pillardown);
-// }
-
 function spawnPillar(){
   let pillar ={
     x: random(20, width - 20),
@@ -65,6 +55,8 @@ function spawnPillar(){
     PillarWidth: 20,
     pillarHeight: random(30, height/2),
     pillarHeightDown: random(height/2, 600),
+    deltaTime: 0.002,
+    timeX: random(20000),
   };
   pillarArray.push(pillar);
 }
@@ -89,3 +81,12 @@ function spawnPillar(){
 //     }
 //   }
 // }
+function movepillarssWithNoise(){
+  for (let pillars of pillarArray){
+    let x = noise(pillars.timeX) * width;
+
+    pillars.x = x;
+
+    pillars.timeX -= pillars.deltaTime;
+  }
+}
