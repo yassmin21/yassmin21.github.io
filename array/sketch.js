@@ -10,21 +10,24 @@
 
 let pillarArray = [];
 let ycircle = 350;
+let pillarGone = false;
+let xcirlcle = 0;
 
 function setup() {
   createCanvas(700, 700);
-  for(let i = 0; i < 5; i++){
+  for(let i = 0; i < 1; i++){
     spawnPillar();
   }
+
+  window.setInterval(spawnPillar, 500, pillarGone === true);
 }
 
 function draw() {
   background(0);
-  movepillarssWithNoise();
   displayPillars();
   displayCircle();
-  // movepillarsback();
-  // colidedPillars();
+
+  // collidedPillars();
 }
 
 function displayCircle(){
@@ -34,9 +37,7 @@ function displayCircle(){
   circle(30, ycircle, 30);
 }
 
-// function movepillarsback(x, pillar){
-//   pillar.x -= 50;
-// }
+
 
 function displayPillars(){
   for(let pillars of pillarArray){
@@ -62,31 +63,18 @@ function spawnPillar(){
 }
 
 
-// function colidedPillars(x, y, pillar){
-//   let distanceAway = dist(x, y, pillar.x, pillar.ydown);
-//   let radius = pillar.pillarwidth;
-//   if(distanceAway < pillarwidth){
-//     return true;
-//   }
-//   else{
-//     return false;
-//   }
-// }
+function keyPressed(){
+  if(key === UP_ARROW){
 
-// function mousePressed(){
-//   for(let i = pillarArray.length-1; i>= 0; i--){
-//     if(colidedPillars(mouseX, mouseY, pillar[i])){
-//       //kill it
-//       pillarArray.splice(i, 1);
-//     }
-//   }
-// }
-function movepillarssWithNoise(){
-  for (let pillars of pillarArray){
-    let x = noise(pillars.timeX) * width;
-
-    pillars.x = x;
-
-    pillars.timeX -= pillars.deltaTime;
   }
 }
+
+// function movepillarssWithNoise(){
+//   for (let pillars of pillarArray){
+//     let x = noise(pillars.timeX) * width;
+
+//     pillars.x = x;
+
+//     pillars.timeX -= pillars.deltaTime;
+//   }
+// }
