@@ -7,11 +7,15 @@
 
 
 let pillarArray = [];
+
+
+//make one object
 let xcircle= 50;
 let ycircle= 300;
 let widthcircle= 20;
 let gravity= 0.75;
 let velocity= 0;
+
 
 function setup() {
   createCanvas(400, 600);
@@ -24,7 +28,6 @@ function draw() {
   updatepillars();
   displayCircle();
   updateCirle();
-  // updateCircle();
 }
 
 function displayCircle(){
@@ -35,6 +38,17 @@ function displayCircle(){
 function updateCirle(){
   velocity += gravity;
   ycircle += velocity;
+
+  if(ycircle > height){
+    // end game
+    ycircle = height;
+    velocity = 0;
+  }
+  if(ycircle < 0){
+    //end game
+    ycircle = 0;
+    velocity = 0;
+  }
 }
 
 function displayPillars(){
@@ -67,4 +81,6 @@ function spawnPillar(){
   pillarArray.push(pillar);
 }
 
-
+function mousePressed(){
+  ycircle += 50;
+}
