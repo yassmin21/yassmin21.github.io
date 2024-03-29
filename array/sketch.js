@@ -5,8 +5,13 @@
 // - describe what you did to take this project "above and beyond"
 // - framecount
 
-let object;
+
 let pillarArray = [];
+let xcircle= 50;
+let ycircle= 300;
+let widthcircle= 20;
+let gravity= 0.75;
+let velocity= 0;
 
 function setup() {
   createCanvas(400, 600);
@@ -18,19 +23,19 @@ function draw() {
   displayPillars();
   updatepillars();
   displayCircle();
+  updateCirle();
   // updateCircle();
 }
 
 function displayCircle(){
-  let object = {
-    xcircle: 50,
-    ycircle: height/2,
-    widthcircle: 20,
-  }
   fill("white")
-  circle(object.xcircle, object.ycircle, object.widthcircle);
+  circle(xcircle, ycircle, widthcircle);
 }
 
+function updateCirle(){
+  velocity += gravity;
+  ycircle += velocity;
+}
 
 function displayPillars(){
   for(let pillars of pillarArray){
@@ -62,11 +67,4 @@ function spawnPillar(){
   pillarArray.push(pillar);
 }
 
-// function updateCircle(){
-//   for(let object of circleArray){
-//     if(mouseIsPressed){
-//       ycircle += 1;
-//   }
-// }
-// }
 
