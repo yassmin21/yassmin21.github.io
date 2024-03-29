@@ -3,78 +3,70 @@
 //
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
+// - framecount
 
-// let bird = {
- 
-// };
-
+let object;
 let pillarArray = [];
-let ycircle = 350;
-let pillarGone = false;
-let xcirlcle = 0;
 
 function setup() {
-  createCanvas(700, 700);
-  for(let i = 0; i < 1; i++){
-    spawnPillar();
-  }
-
-  window.setInterval(spawnPillar, 500, pillarGone === true);
+  createCanvas(400, 600);
+  spawnPillar();
 }
 
 function draw() {
   background(0);
   displayPillars();
+  updatepillars();
   displayCircle();
-
-  // collidedPillars();
+  // updateCircle();
 }
 
 function displayCircle(){
-  if(mouseIsPressed){
-    ycircle -= 1;
+  let object = {
+    xcircle: 50,
+    ycircle: height/2,
+    widthcircle: 20,
   }
-  circle(30, ycircle, 30);
+  fill("white")
+  circle(object.xcircle, object.ycircle, object.widthcircle);
 }
-
 
 
 function displayPillars(){
   for(let pillars of pillarArray){
-    fill("white");
-    rect(pillars.x, pillars.yup, pillars.PillarWidth, pillars.pillarHeight);
-    rect(pillars.x, pillars.ydown, pillars.PillarWidth, pillars.pillarHeightDown);
+    fill("pink");
+    rect(pillars.x, pillars.yup, pillars.PillarWidth, pillars.pillarHeightUP);
+    rect(pillars.x, height - pillars.pillarHeightDown, pillars.PillarWidth, pillars.pillarHeightDown);
   }
 }
 
+function updatepillars(){
+  for(let pillars of pillarArray){
+    pillars.x -= pillars.speed;
+  }
+  if (frameCount % 100 === 0){
+    spawnPillar();
+  }
+}
 
 function spawnPillar(){
   let pillar ={
-    x: random(20, width - 20),
+    x: width,
     yup: 0,
-    ydown: random(height/2 + 20, 600),
     PillarWidth: 20,
-    pillarHeight: random(30, height/2),
-    pillarHeightDown: random(height/2, 600),
-    deltaTime: 0.002,
-    timeX: random(20000),
+    pillarHeightUP: random(30, height/2),
+    pillarHeightDown: random(30, height/2),
+    speed: 2,
+
   };
   pillarArray.push(pillar);
 }
 
-
-function keyPressed(){
-  if(key === UP_ARROW){
-
-  }
-}
-
-// function movepillarssWithNoise(){
-//   for (let pillars of pillarArray){
-//     let x = noise(pillars.timeX) * width;
-
-//     pillars.x = x;
-
-//     pillars.timeX -= pillars.deltaTime;
+// function updateCircle(){
+//   for(let object of circleArray){
+//     if(mouseIsPressed){
+//       ycircle += 1;
 //   }
 // }
+// }
+
