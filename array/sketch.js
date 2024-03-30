@@ -8,14 +8,22 @@
 
 let pillarArray = [];
 
+function preload() {
+  img = loadImage('background flappy.png');
+  bird = loadImage('flappybird2.png');
+  pillarup = loadImage('pillarup.png');
+  pillardown = loadImage('pillardown.png');
+}
+
 
 //make one object
 let xcircle= 50;
 let ycircle= 300;
-let widthcircle= 20;
-let gravity= 0.75;
+let widthcircle= 70;
+let gravity= 0.3;
 let velocity= 0;
 
+let state = 'before';
 
 function setup() {
   createCanvas(400, 600);
@@ -23,19 +31,33 @@ function setup() {
 }
 
 function draw() {
-  background(0);
-  displayPillars();
-  updatepillars();
-  displayCircle();
-  updateCirle();
+  background(img);
+  // if (state = "before"){
+  //   startScreenDisplay();
+  // }
+  // else {
+    displayPillars();
+    updatepillars();
+    displayCircle();
+    updateCirle(); 
+  // }
+  
+}
+
+function startScreenDisplay(){
+  if(mouseIsPressed){
+    state = "after";
+  }
 }
 
 function displayCircle(){
   fill("white")
-  circle(xcircle, ycircle, widthcircle);
+  // circle(xcircle, ycircle, widthcircle);
+  image(bird, xcircle, ycircle, widthcircle, widthcircle);
 }
 
 function updateCirle(){
+  velocity * 0.9;
   velocity += gravity;
   ycircle += velocity;
 
@@ -54,8 +76,10 @@ function updateCirle(){
 function displayPillars(){
   for(let pillars of pillarArray){
     fill("pink");
-    rect(pillars.x, pillars.yup, pillars.PillarWidth, pillars.pillarHeightUP);
-    rect(pillars.x, height - pillars.pillarHeightDown, pillars.PillarWidth, pillars.pillarHeightDown);
+    // rect(pillars.x, pillars.yup, pillars.PillarWidth, pillars.pillarHeightUP);
+    image(pillarup, pillars.x, pillars.yup, pillars.PillarWidth, pillars.pillarHeightUP);
+    // rect(pillars.x, height - pillars.pillarHeightDown, pillars.PillarWidth, pillars.pillarHeightDown);
+    image(pillardown, pillars.x, height - pillars.pillarHeightDown, pillars.PillarWidth, pillars.pillarHeightDown);
   }
 }
 
@@ -72,7 +96,7 @@ function spawnPillar(){
   let pillar ={
     x: width,
     yup: 0,
-    PillarWidth: 20,
+    PillarWidth: 50,
     pillarHeightUP: random(30, height/2),
     pillarHeightDown: random(30, height/2),
     speed: 2,
@@ -82,5 +106,6 @@ function spawnPillar(){
 }
 
 function mousePressed(){
-  ycircle += 50;
+  velocity -= gravity * 25;
+  
 }
