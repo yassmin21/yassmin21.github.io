@@ -7,6 +7,7 @@
 
 
 let pillarArray = [];
+let music;
 
 function preload() {
   img = loadImage('background flappy.png');
@@ -14,6 +15,7 @@ function preload() {
   pillarup = loadImage('pillarup.png');
   pillardown = loadImage('pillardown.png');
   gameover = loadImage('GAME OVER.png');
+  music = loadSound('music.mp3');
 }
 
 
@@ -32,6 +34,7 @@ let hitdown = false;
 function setup() {
   createCanvas(400, 600);
   spawnPillar();
+  music.play();
 }
 
 function draw() {
