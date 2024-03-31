@@ -13,17 +13,21 @@ function preload() {
   bird = loadImage('flappybird2.png');
   pillarup = loadImage('pillarup.png');
   pillardown = loadImage('pillardown.png');
+  gameover = loadImage('GAME OVER.png');
 }
 
 
 //make one object
 let xcircle= 50;
 let ycircle= 300;
-let widthcircle= 70;
+let widthcircle= 50;
+let lengthcircle = 40;
 let gravity= 0.3;
 let velocity= 0;
 
-let state = 'before';
+let state = "playing";
+let hitup = false;
+let hitdown = false;
 
 function setup() {
   createCanvas(400, 600);
@@ -31,29 +35,47 @@ function setup() {
 }
 
 function draw() {
-  background(img);
-  // if (state = "before"){
-  //   startScreenDisplay();
-  // }
-  // else {
-    displayPillars();
-    updatepillars();
-    displayCircle();
-    updateCirle(); 
-  // }
+  if(state === "playing"){
+   background(img);
+   displayPillars();
+   updatepillars();
+   displayCircle();
+   updateCirle(); 
+   changestate(); 
+  }
   
+  else if (state === "loose"){
+    loose();
+  }
 }
 
-function startScreenDisplay(){
-  if(mouseIsPressed){
-    state = "after";
+// function startScreenDisplay(){
+//   if(mouseIsPressed){
+//     state = "after";
+//   }
+// }
+
+function changestate(){
+  if(ycircle > 550){
+    state = "loose";
   }
+  for(let pillars of pillarArray){
+    hitup = collideRectRect(pillars.x, pillars.yup, pillars.PillarWidth, pillars.pillarHeightUP,xcircle, ycircle, widthcircle, lengthcircle);
+    hitdown = collideRectRect(pillars.x, height - pillars.pillarHeightDown, pillars.PillarWidth, pillars.pillarHeightDown, xcircle, ycircle, widthcircle, lengthcircle);
+    if(hitup || hitdown){
+     state = "loose";
+   }
+  }
+}
+
+function loose(){
+  background(gameover);
 }
 
 function displayCircle(){
   fill("white")
   // circle(xcircle, ycircle, widthcircle);
-  image(bird, xcircle, ycircle, widthcircle, widthcircle);
+  image(bird, xcircle, ycircle, widthcircle, lengthcircle);
 }
 
 function updateCirle(){
@@ -66,8 +88,7 @@ function updateCirle(){
     ycircle = height;
     velocity = 0;
   }
-  if(ycircle < 0){
-    //end game
+  if(ycircle< 0){
     ycircle = 0;
     velocity = 0;
   }
@@ -107,5 +128,4 @@ function spawnPillar(){
 
 function mousePressed(){
   velocity -= gravity * 25;
-  
 }
