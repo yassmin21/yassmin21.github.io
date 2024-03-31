@@ -58,6 +58,10 @@ function draw() {
 //   }
 // }
 
+function CountPoints(){
+  
+}
+
 function changestate(){
   if(ycircle > 550){
     state = "loose";
@@ -73,6 +77,9 @@ function changestate(){
 
 function loose(){
   background(gameover);
+  if(mouseIsPressed){
+    state = "playing";
+  }
 }
 
 function displayCircle(){
