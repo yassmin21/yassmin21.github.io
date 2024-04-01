@@ -4,6 +4,7 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 // - framecount
+// - music
 
 
 let pillarArray = [];
@@ -16,6 +17,7 @@ function preload() {
   pillardown = loadImage('pillardown.png');
   gameover = loadImage('GAME OVER.png');
   music = loadSound('music.mp3');
+  loosemusic = loadSound('gameovermusic.mp3');
 }
 
 
@@ -27,7 +29,7 @@ let lengthcircle = 40;
 let gravity= 0.3;
 let velocity= 0;
 
-let state = "playing";
+let state = "before";
 let hitup = false;
 let hitdown = false;
 
@@ -35,10 +37,17 @@ function setup() {
   createCanvas(400, 600);
   spawnPillar();
   music.play();
+  // if(state = "loose"){
+  //   loosemusic.play();
+  // }
+  
 }
 
 function draw() {
-  if(state === "playing"){
+  if(state === "before"){
+    startScreenDisplay();
+  }
+  else if(state === "playing"){
    background(img);
    displayPillars();
    updatepillars();
@@ -52,15 +61,16 @@ function draw() {
   }
 }
 
-// function startScreenDisplay(){
-//   if(mouseIsPressed){
-//     state = "after";
-//   }
-// }
-
-function CountPoints(){
-  
+function startScreenDisplay(){
+  background(img);
+  if(keyIsPressed){
+    state = "playing";
+  }
 }
+
+// function CountPoints(){
+//   if(xcircle > )
+// }
 
 function changestate(){
   if(ycircle > 550){
@@ -78,7 +88,9 @@ function changestate(){
 function loose(){
   background(gameover);
   if(mouseIsPressed){
-    state = "playing";
+    ycircle = 300;
+    pillarArray = [];
+    state = "before";
   }
 }
 
@@ -98,7 +110,7 @@ function updateCirle(){
     ycircle = height;
     velocity = 0;
   }
-  if(ycircle< 0){
+  if(ycircle < 0){
     ycircle = 0;
     velocity = 0;
   }
@@ -128,14 +140,17 @@ function spawnPillar(){
     x: width,
     yup: 0,
     PillarWidth: 50,
-    pillarHeightUP: random(30, height/2),
-    pillarHeightDown: random(30, height/2),
+    pillarHeightUP: random(50, height/2 - 10),
+    pillarHeightDown: random(50, height/2 + 10),
     speed: 2,
 
   };
   pillarArray.push(pillar);
 }
 
-function mousePressed(){
-  velocity -= gravity * 25;
+function keyPressed(){
+  if(key = " "){
+    velocity -= gravity * 25; 
+  }
+ 
 }
