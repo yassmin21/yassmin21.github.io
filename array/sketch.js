@@ -9,23 +9,25 @@
 
 let pillarArray = [];
 let music;
+let slider;
 
 function preload() {
   img = loadImage('background flappy.png');
   bird = loadImage('flappybird2.png');
-  pillarup = loadImage('pillarup.png');
-  pillardown = loadImage('pillardown.png');
+  pillarUp = loadImage('pillarup.png');
+  pillarDown = loadImage('pillardown.png');
   gameover = loadImage('GAME OVER.png');
+  startScreen = loadImage('startscreen.png');
   music = loadSound('music.mp3');
   loosemusic = loadSound('gameovermusic.mp3');
 }
 
 
 //make one object
-let xcircle= 50;
-let ycircle= 300;
-let widthcircle= 50;
-let lengthcircle = 40;
+let xCircle= 50;
+let yCircle= 300;
+let widthCircle= 50;
+let lengthCircle = 40;
 let gravity= 0.3;
 let velocity= 0;
 
@@ -36,14 +38,12 @@ let hitdown = false;
 function setup() {
   createCanvas(400, 600);
   spawnPillar();
-  music.play();
-  // if(state = "loose"){
-  //   loosemusic.play();
-  // }
-  
+  slider = createSlider(0, 1, 0.5, 0.01);
+  music.loop();
 }
 
 function draw() {
+  music.setVolume(slider.value());
   if(state === "before"){
     startScreenDisplay();
   }
@@ -53,7 +53,7 @@ function draw() {
    updatepillars();
    displayCircle();
    updateCirle(); 
-   changestate(); 
+   changeState(); 
   }
   
   else if (state === "loose"){
@@ -62,33 +62,36 @@ function draw() {
 }
 
 function startScreenDisplay(){
-  background(img);
+  background(startScreen);
+
   if(keyIsPressed){
     state = "playing";
   }
 }
 
 // function CountPoints(){
-//   if(xcircle > )
+
 // }
 
-function changestate(){
-  if(ycircle > 550){
+function changeState(){
+  if(yCircle > 550){
     state = "loose";
   }
   for(let pillars of pillarArray){
-    hitup = collideRectRect(pillars.x, pillars.yup, pillars.PillarWidth, pillars.pillarHeightUP,xcircle, ycircle, widthcircle, lengthcircle);
-    hitdown = collideRectRect(pillars.x, height - pillars.pillarHeightDown, pillars.PillarWidth, pillars.pillarHeightDown, xcircle, ycircle, widthcircle, lengthcircle);
+    hitup = collideRectRect(pillars.x, pillars.yup, pillars.PillarWidth, pillars.pillarHeightUp,xCircle, yCircle, widthCircle, lengthCircle);
+    hitdown = collideRectRect(pillars.x, height - pillars.pillarHeightDown, pillars.PillarWidth, pillars.pillarHeightDown, xCircle, yCircle, widthCircle, lengthCircle);
     if(hitup || hitdown){
      state = "loose";
    }
+   count = 0;
+   
   }
 }
 
 function loose(){
   background(gameover);
   if(mouseIsPressed){
-    ycircle = 300;
+    yCircle = 300;
     pillarArray = [];
     state = "before";
   }
@@ -97,21 +100,21 @@ function loose(){
 function displayCircle(){
   fill("white")
   // circle(xcircle, ycircle, widthcircle);
-  image(bird, xcircle, ycircle, widthcircle, lengthcircle);
+  image(bird, xCircle, yCircle, widthCircle, lengthCircle);
 }
 
 function updateCirle(){
   velocity * 0.9;
   velocity += gravity;
-  ycircle += velocity;
+  yCircle += velocity;
 
-  if(ycircle > height){
+  if(yCircle > height){
     // end game
-    ycircle = height;
+    yCircle = height;
     velocity = 0;
   }
-  if(ycircle < 0){
-    ycircle = 0;
+  if(yCircle < 0){
+    yCircle = 0;
     velocity = 0;
   }
 }
@@ -120,9 +123,9 @@ function displayPillars(){
   for(let pillars of pillarArray){
     fill("pink");
     // rect(pillars.x, pillars.yup, pillars.PillarWidth, pillars.pillarHeightUP);
-    image(pillarup, pillars.x, pillars.yup, pillars.PillarWidth, pillars.pillarHeightUP);
+    image(pillarUp, pillars.x, pillars.yup, pillars.PillarWidth, pillars.pillarHeightUp);
     // rect(pillars.x, height - pillars.pillarHeightDown, pillars.PillarWidth, pillars.pillarHeightDown);
-    image(pillardown, pillars.x, height - pillars.pillarHeightDown, pillars.PillarWidth, pillars.pillarHeightDown);
+    image(pillarDown, pillars.x, height - pillars.pillarHeightDown, pillars.PillarWidth, pillars.pillarHeightDown);
   }
 }
 
@@ -130,7 +133,7 @@ function updatepillars(){
   for(let pillars of pillarArray){
     pillars.x -= pillars.speed;
   }
-  if (frameCount % 100 === 0){
+  if (frameCount % 100 === 0 && state === "playing"){
     spawnPillar();
   }
 }
@@ -140,8 +143,8 @@ function spawnPillar(){
     x: width,
     yup: 0,
     PillarWidth: 50,
-    pillarHeightUP: random(50, height/2 - 10),
-    pillarHeightDown: random(50, height/2 + 10),
+    pillarHeightUp: random(50, height/2 - 30),
+    pillarHeightDown: random(50, height/2 + 30),
     speed: 2,
 
   };
@@ -152,5 +155,4 @@ function keyPressed(){
   if(key = " "){
     velocity -= gravity * 25; 
   }
- 
 }
