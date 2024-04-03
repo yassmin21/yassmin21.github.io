@@ -39,7 +39,10 @@ function setup() {
   createCanvas(400, 600);
   spawnPillar();
   slider = createSlider(0, 1, 0.5, 0.01);
-  music.loop();
+  if(state === "before" || state === "playing"){
+    music.loop();
+  }
+  // let play = loosemusic.play();
 }
 
 function draw() {
@@ -47,15 +50,15 @@ function draw() {
   if(state === "before"){
     startScreenDisplay();
   }
-  else if(state === "playing"){
+  else if(state === "playing"){ 
+   
    background(img);
    displayPillars();
-   updatepillars();
+   updatePillars();
    displayCircle();
    updateCirle(); 
    changeState(); 
   }
-  
   else if (state === "loose"){
     loose();
   }
@@ -63,7 +66,6 @@ function draw() {
 
 function startScreenDisplay(){
   background(startScreen);
-
   if(keyIsPressed){
     state = "playing";
   }
@@ -74,54 +76,63 @@ function startScreenDisplay(){
 // }
 
 function changeState(){
+  //if the bird falls down then end game
   if(yCircle > 550){
     state = "loose";
   }
+  //collision detection if bird hits the pillars then end game
   for(let pillars of pillarArray){
     hitup = collideRectRect(pillars.x, pillars.yup, pillars.PillarWidth, pillars.pillarHeightUp,xCircle, yCircle, widthCircle, lengthCircle);
     hitdown = collideRectRect(pillars.x, height - pillars.pillarHeightDown, pillars.PillarWidth, pillars.pillarHeightDown, xCircle, yCircle, widthCircle, lengthCircle);
     if(hitup || hitdown){
      state = "loose";
    }
-   count = 0;
    
   }
 }
 
 function loose(){
   background(gameover);
+  // loosemusic.play();
+  // console.log(loosemusic);
   if(mouseIsPressed){
+    //bird goes to the middle of the screen 
     yCircle = 300;
+    //array becomes empty
     pillarArray = [];
+    //reset state to the start
     state = "before";
   }
 }
 
+//displays the bird 
 function displayCircle(){
-  fill("white")
   // circle(xcircle, ycircle, widthcircle);
   image(bird, xCircle, yCircle, widthCircle, lengthCircle);
 }
 
+
 function updateCirle(){
+  //makes it so that if you dont click then the bird falls down
   velocity * 0.9;
   velocity += gravity;
   yCircle += velocity;
 
   if(yCircle > height){
-    // end game
+    //doesnt let the bird go down the screen 
     yCircle = height;
     velocity = 0;
   }
   if(yCircle < 0){
+    //doesn't let the bird go above the screen
     yCircle = 0;
     velocity = 0;
   }
 }
 
+//displays the pillars using images loaded before
 function displayPillars(){
   for(let pillars of pillarArray){
-    fill("pink");
     // rect(pillars.x, pillars.yup, pillars.PillarWidth, pillars.pillarHeightUP);
     image(pillarUp, pillars.x, pillars.yup, pillars.PillarWidth, pillars.pillarHeightUp);
     // rect(pillars.x, height - pillars.pillarHeightDown, pillars.PillarWidth, pillars.pillarHeightDown);
@@ -129,7 +140,8 @@ function displayPillars(){
   }
 }
 
-function updatepillars(){
+//make pillars move to the left and add a new pillar every 100 frames when the state is playing
+function updatePillars(){
   for(let pillars of pillarArray){
     pillars.x -= pillars.speed;
   }
@@ -138,6 +150,7 @@ function updatepillars(){
   }
 }
 
+//object notation for each pillar then put them in an array
 function spawnPillar(){
   let pillar ={
     x: width,
@@ -151,6 +164,7 @@ function spawnPillar(){
   pillarArray.push(pillar);
 }
 
+//If the space is pressed then make the bird jump 25 pixels 
 function keyPressed(){
   if(key = " "){
     velocity -= gravity * 25; 
