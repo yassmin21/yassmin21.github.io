@@ -11,6 +11,7 @@ let pillarArray = [];
 let music;
 let slider;
 let score = 0;
+let Highscore = 0;
 
 function preload() {
   img = loadImage('background flappy.png');
@@ -59,8 +60,10 @@ function draw() {
     changeState(); 
   }
   else if (state === "loose"){
+    checkHighScore();
     loose();
   }
+  
 }
 
 //Draws the Score Text
@@ -107,6 +110,7 @@ function loose(){
   textFont("Verdana");
   stroke(3);
   text("Score: " + score, width/2, height /2 + 60);
+  text("HighScore " + Highscore, width/2, height/2 + 90);
   if(mouseIsPressed){
     //bird goes to the middle of the screen 
     yCircle = 300;
@@ -115,6 +119,12 @@ function loose(){
     //reset state to the start
     state = "before";
     score = 0;
+  }
+}
+
+function checkHighScore(){
+  if(score > Highscore){
+    Highscore = score;
   }
 }
 
