@@ -10,6 +10,7 @@
 let pillarArray = [];
 let music;
 let slider;
+let score = 0;
 
 function preload() {
   img = loadImage('background flappy.png');
@@ -19,7 +20,6 @@ function preload() {
   gameover = loadImage('GAME OVER.png');
   startScreen = loadImage('startscreen.png');
   music = loadSound('music.mp3');
-  loosemusic = loadSound('gameovermusic.mp3');
 }
 
 
@@ -42,7 +42,6 @@ function setup() {
   if(state === "before" || state === "playing"){
     music.loop();
   }
-  // let play = loosemusic.play();
 }
 
 function draw() {
@@ -51,18 +50,29 @@ function draw() {
     startScreenDisplay();
   }
   else if(state === "playing"){ 
-   
-   background(img);
-   displayPillars();
-   updatePillars();
-   displayCircle();
-   updateCirle(); 
-   changeState(); 
+    background(img);
+    displayPillars();
+    updatePillars();
+    displayCircle();
+    updateCirle(); 
+    drawText();
+    changeState(); 
   }
   else if (state === "loose"){
     loose();
   }
 }
+
+//Draws the Score Text
+function drawText(){
+    fill("white");
+    noStroke();
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    textSize(50);
+    text(score, width / 2, height /6);
+}
+
 
 function startScreenDisplay(){
   background(startScreen);
@@ -71,9 +81,6 @@ function startScreenDisplay(){
   }
 }
 
-// function CountPoints(){
-
-// }
 
 function changeState(){
   //if the bird falls down then end game
@@ -87,14 +94,19 @@ function changeState(){
     if(hitup || hitdown){
      state = "loose";
    }
-   
-  }
+   //Checks if the bird is in between pillars and adds the score
+   if(xCircle === pillars.x && hitup === false && hitdown === false && state === "playing"){
+      score = score + 1;
+  } 
+  } 
 }
 
 function loose(){
   background(gameover);
-  // loosemusic.play();
-  // console.log(loosemusic);
+  textSize(25);
+  textFont("Verdana");
+  stroke(3);
+  text("Score: " + score, width/2, height /2 + 60);
   if(mouseIsPressed){
     //bird goes to the middle of the screen 
     yCircle = 300;
@@ -102,6 +114,7 @@ function loose(){
     pillarArray = [];
     //reset state to the start
     state = "before";
+    score = 0;
   }
 }
 
@@ -145,7 +158,7 @@ function updatePillars(){
   for(let pillars of pillarArray){
     pillars.x -= pillars.speed;
   }
-  if (frameCount % 100 === 0 && state === "playing"){
+  if (frameCount % 100 === 0){
     spawnPillar();
   }
 }
