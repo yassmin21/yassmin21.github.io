@@ -1,3 +1,6 @@
+/* eslint-disable no-cond-assign */
+/* eslint-disable no-constant-condition */
+/* eslint-disable no-undef */
 // flappy bird
 // Yassmin Ibrahim
 //
@@ -27,13 +30,13 @@ let velocity = 0;
 
 //loading all sounds and images before the game starts
 function preload() {
-  img = loadImage('background flappy.png');
-  bird = loadImage('flappybird2.png');
-  pillarUp = loadImage('pillarup.png');
-  pillarDown = loadImage('pillardown.png');
-  gameOver = loadImage('GAME OVER.png');
-  startScreen = loadImage('startscreen.png');
-  music = loadSound('music.mp3');
+  img = loadImage("background flappy.png");
+  bird = loadImage("flappybird2.png");
+  pillarUp = loadImage("pillarup.png");
+  pillarDown = loadImage("pillardown.png");
+  gameOver = loadImage("GAME OVER.png");
+  startScreen = loadImage("startscreen.png");
+  music = loadSound("music.mp3");
 }
 
 function setup() {
@@ -76,9 +79,9 @@ function draw() {
 
 //Draws the Score Text as game is playing
 function drawText(){
-    noStroke();
-    textSize(50);
-    text(score, width / 2, height /6);
+  noStroke();
+  textSize(50);
+  text(score, width / 2, height /6);
 }
 
 
@@ -102,12 +105,12 @@ function changeState(){
     yBottomPillar = height - heightBottomPillar;
     hitDown = collideRectRect(pillars.x, yBottomPillar, pillars.PillarWidth, heightBottomPillar, xBird, yBird, widthBird, lengthBird);
     if(state === "playing" && hitUp || hitDown){
-     state = "loose";
-   }
-   //Checks if the bird is in between pillars and adds the score
-   if(xBird === pillars.x && hitUp === false && hitDown === false && state === "playing"){
+      state = "loose";
+    }
+    //Checks if the bird is in between pillars and adds the score
+    if(xBird === pillars.x && hitUp === false && hitDown === false && state === "playing"){
       score = score + 1;
-  } 
+    } 
   } 
   if(state === "loose" && mouseIsPressed){
     music.play();
