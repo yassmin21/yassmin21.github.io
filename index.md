@@ -12,3 +12,4 @@
 ## projects
 - [interactive scene](scene)
 - [array assignment](array)
+- [2D array assignment](2D array)

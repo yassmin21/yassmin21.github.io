@@ -27,7 +27,7 @@ function setup() {
     createCanvas(windowHeight, windowHeight);
   }
 
-  //if randomizing the grid, do this:
+  //if randomizing the grid, do this :
   grid = generateRandomGrid(GRID_SIZE, GRID_SIZE);
   
   //this is dumb -- should check if this is the right size!
