@@ -4,15 +4,15 @@
 
 // if you are hard-coding a level, I'd use something like this
 
-let grid = [[0, 0, 3, 0, 0, 0, 0, 0, 0],
-  [0, 0, 3, 0, 0, 0, 0, 0, 0],
-  [0, 0, 3, 0, 0, 0, 0, 0, 0],
-  [0, 0, 3, 0, 0, 0, 0, 0, 0],
-  [0, 0, 3, 0, 0, 0, 0, 0, 0],
-  [0, 0, 3, 0, 0, 0, 0, 0, 0],
-  [0, 0, 3, 0, 0, 0, 0, 0, 0],
-  [0, 0, 3, 0, 0, 0, 0, 0, 0],
-  [0, 0, 3, 0, 0, 0, 0, 0, 0]];
+let grid = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0]];
 let cellSize;
 
 function setup() {
@@ -48,14 +48,28 @@ function draw() {
 function displayGrid() {
   for (let y = 0; y < grid.length; y++) {
     for (let x = 0; x < grid[y].length; x++) {
-        if(grid[y][x] === 3){
-            strokeWeight(3);
-        }
-        else{
-            strokeWeight(1);
-        }
+      // if(grid[y][x] === 3){
+      //     strokeWeight(3);
+      // }
+      // else{
+      //     strokeWeight(1);
+      // }
       square(x * cellSize, y * cellSize, cellSize);
+      
+      if(grid[y][x] === 1){
+        text("1", x * cellSize, y * cellSize);
+      }
     }
   }
 }
 
+function keyPressed(){
+  let x = Math.floor(mouseX/cellSize);
+  let y = Math.floor(mouseY/cellSize);
+  if(key === "1"){
+    grid[y][x] = 1;
+  }
+  else if(key === "2"){
+    grid[y][x] = 2;
+  }
+}
