@@ -38,6 +38,8 @@ function setup() {
   
   //this is dumb -- should check if this is the right size!
   cellSize = height/grid.length;
+
+
   textSize(50);
   textAlign(CENTER, CENTER);
 }
@@ -64,9 +66,8 @@ function displayGrid() {
     for (let x = 0; x < grid[y].length; x++) {
 
       square(x * cellSize, y * cellSize, cellSize);
-      
+      line(grid/3, 0, grid/3, windowHeight)
       if(grid[y][x] === 1){
-        
         text("1", x * cellSize + 45, y * cellSize + 50);
       }
       if(grid[y][x] === 2){
@@ -94,18 +95,18 @@ function displayGrid() {
         text("9", x * cellSize + 45, y * cellSize + 50);
       }
       if(grid[y][x] === 0){
-        text("0", x * cellSize + 45, y * cellSize + 50 );
+        text(" ", x * cellSize + 45, y * cellSize + 50 );
       }
     }
   }
 }
 
-// function displayNumbers(){
-//   if(grid[y][x] === 1){
-//     textSize(50);
-//     textAlign(CENTER, CENTER);
-//     text("1", x * cellSize + 45, y * cellSize + 50);
-//   }
+
+
+// function mousePressed(){
+//   let x = Math.floor(mouseX/cellSize);
+//   let y = Math.floor(mouseY/cellSize);
+//   fill("blue");
 // }
 
 function keyPressed(){
@@ -138,7 +139,7 @@ function keyPressed(){
   else if(key === "9" && grid[y][x] === 0){
     grid[y][x] = 9;
   }
-  else if(key === BACKSPACE){
+  else if(keyCode === BACKSPACE){
     grid[y][x] = 0;
   }
 }
