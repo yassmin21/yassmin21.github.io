@@ -14,7 +14,7 @@ let solvedGrid = [[8, 1, 6, 2, 3, 4, 5, 7, 9],
   [6, 9, 5, 8, 4, 3, 7, 1, 2],
   [7, 8, 4, 1, 2, 9, 3, 6, 5]];
 
-const grid = [[8, 1, 0, 0, 3, 0, 0, 0, 0],
+let grid = [[8, 1, 0, 0, 3, 0, 0, 0, 0],
   [2, 5, 9, 0, 6, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 1, 2, 0, 0],
   [0, 0, 0, 0, 8, 6, 0, 2, 0],
@@ -23,7 +23,20 @@ const grid = [[8, 1, 0, 0, 3, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 5, 0, 0, 0],
   [0, 0, 5, 8, 0, 0, 0, 0, 0],
   [0, 0, 4, 0, 2, 0, 3, 0, 0]];
+
+let gridToggle = [[1, 1, 0, 0, 1, 0, 0, 0, 0],
+  [1, 1, 1, 0, 1, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 1, 1, 0, 0],
+  [0, 0, 0, 0, 1, 1, 0, 1, 0],
+  [1, 0, 0, 0, 1, 0, 0, 1, 0],
+  [0, 1, 0, 1, 0, 1, 0, 1, 0],
+  [0, 0, 0, 0, 0, 1, 0, 0, 0],
+  [0, 0, 1, 1, 0, 0, 0, 0, 0],
+  [0, 0, 1, 0, 1, 0, 1, 0, 0]];
+
 let cellSize;
+const OPEN_TILE = 1;
+const IMPASSIBLE = 0;
 
 //masking
 
@@ -59,14 +72,19 @@ function windowResized() {
 function draw() {
   background(220);
   displayGrid();
+  // if(grid === solvedGrid){
+  //   background("black");
+  // }
 }
 
 function displayGrid() {
+  // let x = Math.floor(mouseX/cellSize);
+  // let y = Math.floor(mouseY/cellSize);
   for (let y = 0; y < grid.length; y++) {
     for (let x = 0; x < grid[y].length; x++) {
 
       square(x * cellSize, y * cellSize, cellSize);
-      line(grid/3, 0, grid/3, windowHeight)
+      // line(grid/3, 0, grid/3, windowHeight);
       if(grid[y][x] === 1){
         text("1", x * cellSize + 45, y * cellSize + 50);
       }
@@ -99,6 +117,16 @@ function displayGrid() {
       }
     }
   }
+  // for (let y = 0; y < gridToggle.length; y++) {
+  //   for (let x = 0; x < gridToggle[y].length; x++) {
+  //     if (gridToggle[y][x] === IMPASSIBLE) {
+  //       fill("black");
+  //     }
+  //     else if(gridToggle[y][x] === OPEN_TILE){
+  //       fill("white");
+  //     }
+  //   }
+  // }
 }
 
 
@@ -106,7 +134,7 @@ function displayGrid() {
 // function mousePressed(){
 //   let x = Math.floor(mouseX/cellSize);
 //   let y = Math.floor(mouseY/cellSize);
-//   fill("blue");
+//   grid[y][x] = fill("blue");
 // }
 
 function keyPressed(){

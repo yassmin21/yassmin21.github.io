@@ -1,15 +1,6 @@
-
-
-// if you are hard-coding a level, I'd use something like this
-
-// let grid = [[1, 0, 0, 1],
-//             [0, 1, 0, 1],
-//             [1, 1, 0, 0],
-//             [1, 0, 1, 1],
-//             [0, 0, 0, 1],
-//             [0, 0, 1, 1],
-//             [0, 1, 0, 1],
-//             [0, 0, 0, 1]];
+// Character in 2D Grid
+// Dan Schellenberg
+// Apr 15, 2024
 
 let grid;
 let cellSize;
@@ -17,7 +8,6 @@ const GRID_SIZE = 10;
 const PLAYER = 9;
 const OPEN_TILE = 0;
 const IMPASSIBLE = 1;
-let toggleStyle = "self";
 let player = {
   x: 0,
   y: 0,
@@ -25,15 +15,16 @@ let player = {
 let grassImg;
 let pavingImg;
 let backgroundMusic;
-let soundAffect;
+let cantWalkSound;
 let state = "start screen";
 
-function preload(){
+function preload() {
   grassImg = loadImage("grass1.png");
   pavingImg = loadImage("paving 4.png");
-  backgroundMusic =  loadSound("TownTheme.mp3");
-  soundAffect = loadSound("magic1.wav");
+  backgroundMusic = loadSound("TownTheme.mp3");
+  cantWalkSound = loadSound("magic1.wav");
 }
+
 
 function setup() {
   //make the canvas the largest square that you can...
@@ -55,7 +46,7 @@ function setup() {
 
   //equalize my sounds
   backgroundMusic.setVolume(0.4);
-  soundAffect.setVolume(1.0);
+  cantWalkSound.setVolume(1.0);
 }
 
 function windowResized() {
@@ -71,12 +62,12 @@ function windowResized() {
 }
 
 function draw() {
-  if(state === "start screen"){
+  if (state === "start screen") {
     background("black");
   }
-  else if(state === "game"){
+  else if (state === "game") {
     background(220);
-    displayGrid(); 
+    displayGrid();
   }
 }
 
@@ -88,42 +79,49 @@ function keyPressed() {
   if (key === "e") {
     grid = generateEmptyGrid(GRID_SIZE, GRID_SIZE);
   }
-  if(key === "w"){
-    movePlayer(player.x + 0, player.y - 1); // 0 on x axis and -1 on y axis
+
+  if (key === "w") {   //up
+    movePlayer(player.x + 0, player.y - 1); //0 on x axis, -1 on y axis
   }
-  if(key === "s"){
-    movePlayer(player.x + 0, player.y + 1); // 0 on x axis and +1 on y axis
+
+  if (key === "s") {   //down
+    movePlayer(player.x + 0, player.y + 1); //0 on x axis, 1 on y axis
   }
-  if(key === "d"){
-    movePlayer(player.x + 1, player.y + 0); // 1 on x axis and 0 on y axis
+
+  if (key === "d") {   //right
+    movePlayer(player.x + 1, player.y + 0); //1 on x axis, 0 on y axis
   }
-  if(key === "a"){
-    movePlayer(player.x - 1, player.y + 0); // 0 on x axis and -1 on y axis
+
+  if (key === "a") {   //left
+    movePlayer(player.x - 1, player.y + 0); //-1 on x axis, 0 on y axis
   }
-  if(key === " " && state === "start screen"){
+
+  if (key === " " && state === "start screen") {
     state = "game";
     backgroundMusic.loop();
   }
 }
 
-function movePlayer(x, y){
-  // dont move off the grid, and only move into open tiles
+function movePlayer(x, y) {
+  //don't move off the grid, and only move into open tiles
   if (x < GRID_SIZE && y < GRID_SIZE &&
-      x >= 0 && y >= 0 && grid[y][x] === OPEN_TILE){
-    //previous player location
-    let oldx = player.x;
-    let oldy = player.y;
-    // move the player
-    player.x = x;
-    player.y = y;
+      x >= 0 && y >= 0 && grid[y][x] === OPEN_TILE) {
+      //previous player location
+      let oldX = player.x;
+      let oldY = player.y;
 
-    //reset old location to be an empty tile
-    grid[oldy][oldx] = OPEN_TILE;
+      //move the player
+      player.x = x;
+      player.y = y;
 
-    grid[player.y][player.x] = PLAYER;
+      //reset old location to be an empty tile
+      grid[oldY][oldX] = OPEN_TILE;
+
+      //move the player to the new spot
+      grid[player.y][player.x] = PLAYER;
   }
-  else{
-    soundAffect.play();
+  else {
+    cantWalkSound.play();
   }
 }
 
@@ -133,7 +131,6 @@ function mousePressed() {
 
   //toggle self
   toggleCell(x, y);
-
 }
 
 function toggleCell(x, y) {
@@ -144,7 +141,7 @@ function toggleCell(x, y) {
     if (grid[y][x] === OPEN_TILE) {
       grid[y][x] = IMPASSIBLE;
     }
-    else if(grid[y][x] === IMPASSIBLE) {
+    else if (grid[y][x] === IMPASSIBLE) {
       grid[y][x] = OPEN_TILE;
     }
   }
@@ -157,11 +154,11 @@ function displayGrid() {
         // fill("black");
         image(grassImg, x * cellSize, y * cellSize, cellSize);
       }
-      else if(grid[y][x] === OPEN_TILE){
+      else if (grid[y][x] === OPEN_TILE) {
         // fill("white");
         image(pavingImg, x * cellSize, y * cellSize, cellSize);
       }
-      else if(grid[y][x] === PLAYER){
+      else if (grid[y][x] === PLAYER) {
         fill("red");
         square(x * cellSize, y * cellSize, cellSize);
       }
