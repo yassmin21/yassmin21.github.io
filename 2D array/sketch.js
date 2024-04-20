@@ -35,8 +35,8 @@ let gridToggle = [[1, 1, 0, 0, 1, 0, 0, 0, 0],
   [0, 0, 1, 0, 1, 0, 1, 0, 0]];
 
 let cellSize;
-const OPEN_TILE = 1;
-const IMPASSIBLE = 0;
+const OPEN_TILE = 0;
+const IMPASSIBLE = 1;
 
 //masking
 
@@ -72,9 +72,9 @@ function windowResized() {
 function draw() {
   background(220);
   displayGrid();
-  // if(grid === solvedGrid){
-  //   background("black");
-  // }
+  if(grid === solvedGrid){
+    background("black");
+  }
 }
 
 function displayGrid() {
@@ -131,11 +131,9 @@ function displayGrid() {
 
 
 
-// function mousePressed(){
-//   let x = Math.floor(mouseX/cellSize);
-//   let y = Math.floor(mouseY/cellSize);
-//   grid[y][x] = fill("blue");
-// }
+function mousePressed(){
+  grid = solvedGrid;
+}
 
 function keyPressed(){
   let x = Math.floor(mouseX/cellSize);
@@ -167,7 +165,7 @@ function keyPressed(){
   else if(key === "9" && grid[y][x] === 0){
     grid[y][x] = 9;
   }
-  else if(keyCode === BACKSPACE){
+  else if(keyCode === BACKSPACE && gridToggle[y][x] === 0){
     grid[y][x] = 0;
   }
 }
