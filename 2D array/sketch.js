@@ -53,7 +53,7 @@ function setup() {
   cellSize = height/grid.length;
 
 
-  textSize(50);
+  textSize(cellSize*0.5);
   textAlign(CENTER, CENTER);
 }
 
@@ -67,26 +67,46 @@ function windowResized() {
   }
 
   cellSize = height/grid.length;
+  textSize(cellSize*0.5);
+  displayNumbers();
 }
 
 function draw() {
   background(220);
   displayGrid();
+  displayNumbers();
+  lines();
   if(grid === solvedGrid){
     background("black");
   }
+  
+  
+}
+
+function lines(){
+  strokeWeight(3);
+  line(cellSize*3, 0, cellSize*3, height);
+  line(cellSize * 6, 0, cellSize* 6, height);
+  line(0, cellSize* 3, width, cellSize * 3);
+  line(0, cellSize* 6, width, cellSize * 6);
 }
 
 function displayGrid() {
-  // let x = Math.floor(mouseX/cellSize);
-  // let y = Math.floor(mouseY/cellSize);
+  strokeWeight(1);
   for (let y = 0; y < grid.length; y++) {
     for (let x = 0; x < grid[y].length; x++) {
-
       square(x * cellSize, y * cellSize, cellSize);
-      // line(grid/3, 0, grid/3, windowHeight);
+    }
+  }
+}
+
+function displayNumbers(){
+  let x = Math.floor(mouseX/cellSize);
+  let y = Math.floor(mouseY/cellSize);
+  for(let y = 0; y< grid.length; y++){
+    for(let x = 0; x< grid[y].length; x++){
       if(grid[y][x] === 1){
-        text("1", x * cellSize + 45, y * cellSize + 50);
+        text("1", x * cellSize/2 , y * cellSize/2);
       }
       if(grid[y][x] === 2){
         text("2", x * cellSize + 45, y * cellSize + 50);
@@ -117,23 +137,26 @@ function displayGrid() {
       }
     }
   }
-  // for (let y = 0; y < gridToggle.length; y++) {
-  //   for (let x = 0; x < gridToggle[y].length; x++) {
-  //     if (gridToggle[y][x] === IMPASSIBLE) {
-  //       fill("black");
-  //     }
-  //     else if(gridToggle[y][x] === OPEN_TILE){
-  //       fill("white");
-  //     }
-  //   }
-  // }
+  
 }
 
+// for (let y = 0; y < gridToggle.length; y++) {
+//   for (let x = 0; x < gridToggle[y].length; x++) {
+//     if (gridToggle[y][x] === IMPASSIBLE) {
+//       fill("black");
+//     }
+//     else if(gridToggle[y][x] === OPEN_TILE){
+//       fill("white");
+//     }
+//   }
+// }
 
 
-function mousePressed(){
-  grid = solvedGrid;
-}
+
+
+// function mousePressed(){
+//   grid = solvedGrid;
+// }
 
 function keyPressed(){
   let x = Math.floor(mouseX/cellSize);
