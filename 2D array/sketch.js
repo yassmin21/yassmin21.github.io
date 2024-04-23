@@ -103,37 +103,39 @@ function displayGrid() {
 function displayNumbers(){
   let x = Math.floor(mouseX/cellSize);
   let y = Math.floor(mouseY/cellSize);
+  cellSize = height/grid.length;
+  let xText = x * cellSize + cellSize/2;
   for(let y = 0; y< grid.length; y++){
     for(let x = 0; x< grid[y].length; x++){
       if(grid[y][x] === 1){
-        text("1", x * cellSize/2 , y * cellSize/2);
+        text("1", xText , y * cellSize + cellSize/2);
       }
       if(grid[y][x] === 2){
-        text("2", x * cellSize + 45, y * cellSize + 50);
+        text("2", x * cellSize + cellSize/2 , y * cellSize + cellSize/2);
       }
       if(grid[y][x] === 3){
-        text("3", x * cellSize + 45, y * cellSize + 50);
+        text("3",  x * cellSize + cellSize/2 , y * cellSize + cellSize/2);
       }
       if(grid[y][x] === 4){
-        text("4", x * cellSize + 45, y * cellSize + 50);
+        text("4",  x * cellSize + cellSize/2 , y * cellSize + cellSize/2);
       }
       if(grid[y][x] === 5){
-        text("5", x * cellSize + 45, y * cellSize + 50);
+        text("5", x * cellSize + cellSize/2 , y * cellSize + cellSize/2);
       }
       if(grid[y][x] === 6){
-        text("6", x * cellSize + 45, y * cellSize + 50);
+        text("6",  x * cellSize + cellSize/2 , y * cellSize + cellSize/2);
       }
       if(grid[y][x] === 7){
-        text("7", x * cellSize + 45, y * cellSize + 50);
+        text("7", x * cellSize + cellSize/2 , y * cellSize + cellSize/2);
       }
       if(grid[y][x] === 8){
-        text("8", x * cellSize + 45, y * cellSize + 50);
+        text("8",  x * cellSize + cellSize/2 , y * cellSize + cellSize/2);
       }
       if(grid[y][x] === 9){
-        text("9", x * cellSize + 45, y * cellSize + 50);
+        text("9", x * cellSize + cellSize/2 , y * cellSize + cellSize/2);
       }
       if(grid[y][x] === 0){
-        text(" ", x * cellSize + 45, y * cellSize + 50 );
+        text(" ",  x * cellSize + cellSize/2 , y * cellSize + cellSize/2);
       }
     }
   }
@@ -155,7 +157,16 @@ function displayNumbers(){
 
 
 // function mousePressed(){
-//   grid = solvedGrid;
+//   for (let y = 0; y < gridToggle.length; y++) {
+//     for (let x = 0; x < gridToggle[y].length; x++) {
+//       if(gridToggle[y][x] === 1){
+//         fill("blue");
+//         square(x * cellSize, y * cellSize, cellSize);
+//       }
+//     }
+//   }
+  
+  
 // }
 
 function keyPressed(){
