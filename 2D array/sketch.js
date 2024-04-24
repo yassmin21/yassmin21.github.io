@@ -68,14 +68,14 @@ function windowResized() {
 
   cellSize = height/grid.length;
   textSize(cellSize*0.5);
-  displayNumbers();
 }
 
 function draw() {
   background(220);
   displayGrid();
-  displayNumbers();
   lines();
+  displayNumbers();
+  
   if(grid === solvedGrid){
     background("black");
   }
@@ -101,41 +101,41 @@ function displayGrid() {
 }
 
 function displayNumbers(){
-  let x = Math.floor(mouseX/cellSize);
-  let y = Math.floor(mouseY/cellSize);
   cellSize = height/grid.length;
-  let xText = x * cellSize + cellSize/2;
+  
   for(let y = 0; y< grid.length; y++){
     for(let x = 0; x< grid[y].length; x++){
+      let xText = x * cellSize + cellSize/2;
+      let yText = y * cellSize + cellSize/2;
       if(grid[y][x] === 1){
-        text("1", xText , y * cellSize + cellSize/2);
+        text("1", xText , yText);
       }
       if(grid[y][x] === 2){
-        text("2", x * cellSize + cellSize/2 , y * cellSize + cellSize/2);
+        text("2",xText , yText);
       }
       if(grid[y][x] === 3){
-        text("3",  x * cellSize + cellSize/2 , y * cellSize + cellSize/2);
+        text("3", xText , yText);
       }
       if(grid[y][x] === 4){
-        text("4",  x * cellSize + cellSize/2 , y * cellSize + cellSize/2);
+        text("4",  xText , yText);
       }
       if(grid[y][x] === 5){
-        text("5", x * cellSize + cellSize/2 , y * cellSize + cellSize/2);
+        text("5",xText , yText);
       }
       if(grid[y][x] === 6){
-        text("6",  x * cellSize + cellSize/2 , y * cellSize + cellSize/2);
+        text("6",  xText , yText);
       }
       if(grid[y][x] === 7){
-        text("7", x * cellSize + cellSize/2 , y * cellSize + cellSize/2);
+        text("7", xText , yText);
       }
       if(grid[y][x] === 8){
-        text("8",  x * cellSize + cellSize/2 , y * cellSize + cellSize/2);
+        text("8", xText , yText);
       }
       if(grid[y][x] === 9){
-        text("9", x * cellSize + cellSize/2 , y * cellSize + cellSize/2);
+        text("9", xText , yText);
       }
       if(grid[y][x] === 0){
-        text(" ",  x * cellSize + cellSize/2 , y * cellSize + cellSize/2);
+        text(" ",  xText , yText);
       }
     }
   }
@@ -159,7 +159,7 @@ function displayNumbers(){
 // function mousePressed(){
 //   for (let y = 0; y < gridToggle.length; y++) {
 //     for (let x = 0; x < gridToggle[y].length; x++) {
-//       if(gridToggle[y][x] === 1){
+//       if(gridToggle[y][x]){
 //         fill("blue");
 //         square(x * cellSize, y * cellSize, cellSize);
 //       }
@@ -172,34 +172,38 @@ function displayNumbers(){
 function keyPressed(){
   let x = Math.floor(mouseX/cellSize);
   let y = Math.floor(mouseY/cellSize);
-  if(key === "1" && grid[y][x] === 0){
-    grid[y][x] = 1;
+
+  if(gridToggle[y][x] === 0 && mouseIsPressed){
+    if(key === "1"){
+      grid[y][x] = 1;
+    }
+    else if(key === "2"){
+      grid[y][x] = 2;
+    }
+    else if(key === "3"){
+      grid[y][x] = 3;
+    }
+    else if(key === "4"){
+      grid[y][x] = 4;
+    }
+    else if(key === "5"){
+      grid[y][x] = 5;
+    }
+    else if(key === "6"){
+      grid[y][x] = 6;
+    }
+    else if(key === "7"){
+      grid[y][x] = 7;
+    }
+    else if(key === "8"){
+      grid[y][x] = 8;
+    }
+    else if(key === "9"){
+      grid[y][x] = 9;
+    }
   }
-  else if(key === "2" && grid[y][x] === 0){
-    grid[y][x] = 2;
-  }
-  else if(key === "3"&& grid[y][x] === 0){
-    grid[y][x] = 3;
-  }
-  else if(key === "4" && grid[y][x] === 0){
-    grid[y][x] = 4;
-  }
-  else if(key === "5" && grid[y][x] === 0){
-    grid[y][x] = 5;
-  }
-  else if(key === "6"&& grid[y][x] === 0 ){
-    grid[y][x] = 6;
-  }
-  else if(key === "7"&& grid[y][x] === 0){
-    grid[y][x] = 7;
-  }
-  else if(key === "8" && grid[y][x] === 0){
-    grid[y][x] = 8;
-  }
-  else if(key === "9" && grid[y][x] === 0){
-    grid[y][x] = 9;
-  }
-  else if(keyCode === BACKSPACE && gridToggle[y][x] === 0){
+  
+  if(keyCode === BACKSPACE && gridToggle[y][x] === 0 ){
     grid[y][x] = 0;
   }
 }
