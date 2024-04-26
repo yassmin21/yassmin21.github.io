@@ -2,8 +2,6 @@
 // 4/15/ 2024
 // sudoku
 
-// if you are hard-coding a level, I'd use something like this
-
 let solvedGrid = [[8, 1, 6, 2, 3, 4, 5, 7, 9],
   [2, 5, 9, 7, 6, 8, 4, 3, 1],
   [4, 7, 3, 5, 9, 1, 2, 8, 6],
@@ -35,9 +33,10 @@ let gridToggle = [[1, 1, 0, 0, 1, 0, 0, 0, 0],
   [0, 0, 1, 0, 1, 0, 1, 0, 0]];
 
 let cellSize;
-const OPEN_TILE = 0;
-const IMPASSIBLE = 1;
-let newText = false;
+// const OPEN_TILE = 0;
+// const IMPASSIBLE = 1;
+// let newText = false;
+let state = "playing";
 
 //masking
 
@@ -77,10 +76,26 @@ function draw() {
   lines();
   displayNumbers();
   // toggleCell();
-  if(grid === solvedGrid){
-    background("black");
+  checkState();
+  if(state === "done"){
+    solve();
   }
   
+  
+}
+
+function checkState(){
+  if(mouseIsPressed && state === "playing" && mouseY > cellSize){
+    state = "done";
+  }
+}
+
+function solve(){
+  grid = solvedGrid;
+}
+
+function displaySquare(){
+  square();
 }
 
 function lines(){
@@ -107,11 +122,8 @@ function displayNumbers(){
     for(let x = 0; x< grid[y].length; x++){
       let xText = x * cellSize + cellSize/2;
       let yText = y * cellSize + cellSize/2;
-      if(grid[y][x] === 1){
+      if(grid[y][x] === 1 || (solvedGrid[y][x] === 1 && state === "done") ){
         text("1", xText , yText);
-        if (newText === true){
-          textStyle(BOLD);
-        }
       }
       if(grid[y][x] === 2){
         text("2",xText , yText);
@@ -145,52 +157,15 @@ function displayNumbers(){
   
 }
 
-// for (let y = 0; y < gridToggle.length; y++) {
-//   for (let x = 0; x < gridToggle[y].length; x++) {
-//     if (gridToggle[y][x] === IMPASSIBLE) {
-//       fill("black");
-//     }
-//     else if(gridToggle[y][x] === OPEN_TILE){
-//       fill("white");
-//     }
-//   }
-// }
 
-
-
-
-// function mousePressed(){
-//   for (let y = 0; y < gridToggle.length; y++) {
-//     for (let x = 0; x < gridToggle[y].length; x++) {
-//       if(gridToggle[y][x]){
-//         fill("blue");
-//         square(x * cellSize, y * cellSize, cellSize);
-//       }
-//     }
-//   }
-  
-  
-// }
-// function toggleCell(x, y) {
-//   // make sure the cell you're toggling is in the grid...
-//   if (x >= 0 && y >= 0) {
-//     //toggle the color of the cell
-//     if (gridToggle[y][x] === OPEN_TILE) {
-//       gridToggle[y][x] = IMPASSIBLE;
-//     }
-//     else if (grid[y][x] === IMPASSIBLE) {
-//       gridToggle[y][x] = OPEN_TILE;
-//     }
-//   }
-// }
 function keyPressed(){
   let x = Math.floor(mouseX/cellSize);
   let y = Math.floor(mouseY/cellSize);
 
-  if(gridToggle[y][x] === 0 && mouseIsPressed){
+  if(gridToggle[y][x] === 0){
     if(key === "1"){
       grid[y][x] = 1;
-      newText = true;
+      // newText = true;
     }
     else if(key === "2"){
       grid[y][x] = 2;
