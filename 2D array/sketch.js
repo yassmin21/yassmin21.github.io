@@ -35,8 +35,7 @@ let gridInitial = [[1, 1, 0, 0, 1, 0, 0, 0, 0],
 let cellSize;
 const OPEN_TILE = 0;
 const IMPASSIBLE = 1;
-// let newText = false;
-let state = "playing";
+let state = "startScreen";
 
 //masking
 
@@ -44,13 +43,11 @@ function setup() {
   //make the canvas the largest square that you can...
   if (windowWidth < windowHeight) {
     createCanvas(windowWidth, windowWidth);
-  //   rect(300, 20, 100, 50);
   }
   else {
     createCanvas(windowHeight, windowHeight);
   }
   
-  //this is dumb -- should check if this is the right size!
   cellSize = height/grid.length;
 
 
@@ -72,38 +69,40 @@ function windowResized() {
 }
 
 function draw() {
-  background(220);
-  displayGrid();
-  displaySquare();
-  
-  lines();
-  displayNumbers();
-  
-  // toggleCell();
-  checkState();
-  if(state === "done"){
+  if(state === "startScreen"){
+    startScreen();
+  }
+  else if(state === "playing"){
+    displayGrid();
+    lines();
+    displayNumbers();
+  }
+  else if(state === "done"){
     solve();
   }
   
   
 }
 
-function checkState(){
-  let x = Math.floor(mouseX/cellSize);
-  let y = Math.floor(mouseY/cellSize);
-  let doneBottom = collideRectRect(x * cellSize, y * cellSize, cellSize, cellSize, cellSize * 9, 0, 100, 50);
-  if(mouseIsPressed && state === "playing" && doneBottom){
-    state = "done";
+function startScreen(){
+  background("pink");
+  rect(width/2 - 70, height/2 - 25, 150, 50);
+  text("PLAY", width/2, height/2);
+  if(mouseIsPressed && state === "startScreen" 
+     && mouseX > width/2 - 70 
+     && mouseY > height/2 - 25
+     && mouseX < width/2 + 80 
+     && mouseY < height/2 + 25){
+    state = "playing";
   }
 }
+  
+  
 
 function solve(){
   grid = solvedGrid;
 }
 
-function displaySquare(){
-  rect( cellSize * 9, 0, 100, 50);
-}
 
 function lines(){
   strokeWeight(3);
@@ -115,23 +114,23 @@ function lines(){
 
 function displayGrid() {
   strokeWeight(1);
+  
   for (let y = 0; y < gridInitial.length; y++) {
     for (let x = 0; x < gridInitial[y].length; x++) {
       fill("white");
       square(x * cellSize, y * cellSize, cellSize);
-      if (gridInitial[y][x] === OPEN_TILE && state === "typing") {
-        fill("blue");
+      if (state === "typing") {
+        fill(173, 216, 230);
         let x = Math.floor(mouseX/cellSize);
         let y = Math.floor(mouseY/cellSize);
         square(x * cellSize, y * cellSize, cellSize);
       }
-      
     }
   }
 }
 
 function mouseClicked(){
-    if(state === "playing" && mouseIsPressed){
+    if(state === "playing"){
       state = "typing";
     }
     else if(state === "typing"){
@@ -193,7 +192,7 @@ function keyPressed(){
   let x = Math.floor(mouseX/cellSize);
   let y = Math.floor(mouseY/cellSize);
 
-  if(gridInitial[y][x] === 0 && mouseIsPressed){
+  if(gridInitial[y][x] === 0){
     state = "typing";
     if(key === "1"){
       grid[y][x] = 1;
@@ -232,15 +231,7 @@ function keyPressed(){
     grid[y][x] = 0;
   }
 
-//   for(let y = 0; y< grid.length; y++){
-//     for(let x = 0; x< grid[y].length; x++){
-//       if(grid[y][x] === 1 && key === "1"){
-//       fill("blue");
-//     }
-//     // else{
-//     //   fill("white");
-//     // }
-//     }
-    
-// }
+  if(keyCode === 83){
+    state = "done";
+  }
 }
