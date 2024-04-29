@@ -82,6 +82,9 @@ function draw() {
     HowToPlay();          }
   else if(state === "done"){
     solve();
+    displayGrid();
+    lines();
+    displayNumbers();
   }
   
   
@@ -115,7 +118,7 @@ function solve(){
 
 
 function lines(){
-  strokeWeight(3);
+  strokeWeight(2);
   line(cellSize*3, 0, cellSize*3, height);
   line(cellSize * 6, 0, cellSize* 6, height);
   line(0, cellSize* 3, width, cellSize * 3);
@@ -141,7 +144,7 @@ function displayGrid() {
 }
 
 function mouseClicked(){
-  if(state === "playing" || state === "startScreen"){
+  if(state === "playing"){
     state = "typing";
   }
   else if(state === "typing"){
@@ -151,56 +154,118 @@ function mouseClicked(){
 
 function displayNumbers(){
   cellSize = height/grid.length;
-  for(let y = 0; y< gridInitial.length; y++){
-    for(let x = 0; x< gridInitial[y].length; x++){
-      if(gridInitial[y][x] === 1){
-        textStyle(BOLD);
-      }
-      else{
-        textStyle(NORMAL);
-      }
-    }
-  }
   for(let y = 0; y< grid.length; y++){
     for(let x = 0; x< grid[y].length; x++){
       let xText = x * cellSize + cellSize/2;
       let yText = y * cellSize + cellSize/2;
       if(grid[y][x] === 1){
-        fill("black");
-        text("1", xText , yText);
         
+        if(gridInitial[y][x] === 1){
+          textStyle(BOLD);
+          fill("black");
+          text("1", xText , yText);
+        }
+        else if(gridInitial[y][x] === 0){
+          textStyle(NORMAL);
+          fill("black");
+          text("1", xText , yText);
+        }
       }
       if(grid[y][x] === 2){
-        fill("black");
-        text("2",xText , yText);
+        if(gridInitial[y][x] === 1){
+          textStyle(BOLD);
+          fill("black");
+          text("2", xText , yText);
+        }
+        else if(gridInitial[y][x] === 0){
+          textStyle(NORMAL);
+          fill("black");
+          text("2", xText , yText);
+        }
       }
       if(grid[y][x] === 3){
-        fill("black");
-        text("3", xText , yText);
+        if(gridInitial[y][x] === 1){
+          textStyle(BOLD);
+          fill("black");
+          text("3", xText , yText);
+        }
+        else if(gridInitial[y][x] === 0){
+          textStyle(NORMAL);
+          fill("black");
+          text("3", xText , yText);
+        }
       }
       if(grid[y][x] === 4){
-        fill("black");
-        text("4",  xText , yText);
+        if(gridInitial[y][x] === 1){
+          textStyle(BOLD);
+          fill("black");
+          text("4", xText , yText);
+        }
+        else if(gridInitial[y][x] === 0){
+          textStyle(NORMAL);
+          fill("black");
+          text("4", xText , yText);
+        }
       }
       if(grid[y][x] === 5){
-        fill("black");
-        text("5",xText , yText);
+        if(gridInitial[y][x] === 1){
+          textStyle(BOLD);
+          fill("black");
+          text("5", xText , yText);
+        }
+        else if(gridInitial[y][x] === 0){
+          textStyle(NORMAL);
+          fill("black");
+          text("5", xText , yText);
+        }
       }
       if(grid[y][x] === 6){
-        fill("black");
-        text("6",  xText , yText);
+        if(gridInitial[y][x] === 1){
+          textStyle(BOLD);
+          fill("black");
+          text("6", xText , yText);
+        }
+        else if(gridInitial[y][x] === 0){
+          textStyle(NORMAL);
+          fill("black");
+          text("6", xText , yText);
+        }
       }
       if(grid[y][x] === 7){
-        fill("black");
-        text("7", xText , yText);
+        if(gridInitial[y][x] === 1){
+          textStyle(BOLD);
+          fill("black");
+          text("7", xText , yText);
+        }
+        else if(gridInitial[y][x] === 0){
+          textStyle(NORMAL);
+          fill("black");
+          text("7", xText , yText);
+        }
       }
       if(grid[y][x] === 8){
-        fill("black");
-        text("8", xText , yText);
+        if(gridInitial[y][x] === 1){
+          textStyle(BOLD);
+          fill("black");
+          text("8", xText , yText);
+        }
+        else if(gridInitial[y][x] === 0){
+          textStyle(NORMAL);
+          fill("black");
+          text("8", xText , yText);
+        }
       }
       if(grid[y][x] === 9){
-        fill("black");
-        text("9", xText , yText);
+        if(gridInitial[y][x] === 1){
+          textStyle(BOLD);
+          fill("black");
+          text("9", xText , yText);
+        }
+        else if(gridInitial[y][x] === 0){
+          textStyle(NORMAL);
+          fill("black");
+          text("9", xText , yText);
+        }
       }
     }
   }
@@ -214,7 +279,6 @@ function keyPressed(){
   let y = Math.floor(mouseY/cellSize);
   
   if(gridInitial[y][x] === 0 && state === "playing"){
-    state = "typing";
     if(key === "1"){
       grid[y][x] = 1;
       
@@ -252,7 +316,7 @@ function keyPressed(){
     grid[y][x] = 0;
   }
 
-  if(keyCode === 83){
+  if(keyCode === 83 && state === "playing"){
     state = "done";
   }
 }
