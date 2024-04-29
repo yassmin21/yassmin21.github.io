@@ -53,6 +53,7 @@ function setup() {
 
   textSize(cellSize*0.5);
   textAlign(CENTER, CENTER);
+  
 }
 
 function windowResized() {
@@ -77,6 +78,8 @@ function draw() {
     lines();
     displayNumbers();
   }
+  else if(state === "howToPlay"){
+    HowToPlay();          }
   else if(state === "done"){
     solve();
   }
@@ -88,6 +91,8 @@ function startScreen(){
   background("pink");
   rect(width/2 - 70, height/2 - 25, 150, 50);
   text("PLAY", width/2, height/2);
+  rect(width/2 - 70, height/2 + 50, 150, 50);
+  text("How To Play", width/2, height/2 + 75);
   if(mouseIsPressed && state === "startScreen" 
      && mouseX > width/2 - 70 
      && mouseY > height/2 - 25
@@ -95,8 +100,13 @@ function startScreen(){
      && mouseY < height/2 + 25){
     state = "playing";
   }
+  if(mouseIsPressed && state === "startScreen" && mouseX > width/2 - 70 && mouseY> height/2 + 50 && mouseX < width/2 + 80 && mouseY < height/2 + 125){
+    state = "howToPlay";
+  }
 }
-  
+function HowToPlay(){
+  background("grey");
+}
   
 
 function solve(){
@@ -119,10 +129,11 @@ function displayGrid() {
     for (let x = 0; x < gridInitial[y].length; x++) {
       fill("white");
       square(x * cellSize, y * cellSize, cellSize);
-      if (state === "typing") {
-        fill(173, 216, 230);
+      if (state === "typing" || state === "playing") {
+        
         let x = Math.floor(mouseX/cellSize);
         let y = Math.floor(mouseY/cellSize);
+        fill(173, 216, 230);
         square(x * cellSize, y * cellSize, cellSize);
       }
     }
@@ -130,17 +141,26 @@ function displayGrid() {
 }
 
 function mouseClicked(){
-    if(state === "playing"){
-      state = "typing";
-    }
-    else if(state === "typing"){
-      state = "playing";
-    }
+  if(state === "playing" || state === "startScreen"){
+    state = "typing";
+  }
+  else if(state === "typing"){
+    state = "playing";
+  }
 }
 
 function displayNumbers(){
   cellSize = height/grid.length;
-  
+  for(let y = 0; y< gridInitial.length; y++){
+    for(let x = 0; x< gridInitial[y].length; x++){
+      if(gridInitial[y][x] === 1){
+        textStyle(BOLD);
+      }
+      else{
+        textStyle(NORMAL);
+      }
+    }
+  }
   for(let y = 0; y< grid.length; y++){
     for(let x = 0; x< grid[y].length; x++){
       let xText = x * cellSize + cellSize/2;
@@ -185,14 +205,15 @@ function displayNumbers(){
     }
   }
   
+  
 }
 
 
 function keyPressed(){
   let x = Math.floor(mouseX/cellSize);
   let y = Math.floor(mouseY/cellSize);
-
-  if(gridInitial[y][x] === 0){
+  
+  if(gridInitial[y][x] === 0 && state === "playing"){
     state = "typing";
     if(key === "1"){
       grid[y][x] = 1;
@@ -222,9 +243,9 @@ function keyPressed(){
     else if(key === "9"){
       grid[y][x] = 9;
     }
-    else{
-      state = "playing";
-    }
+    // else{
+    //   state = "playing";
+    // }
   }
   
   if(keyCode === BACKSPACE && gridInitial[y][x] === 0 ){
