@@ -22,7 +22,7 @@ let grid = [[8, 1, 0, 0, 3, 0, 0, 0, 0],
   [0, 0, 5, 8, 0, 0, 0, 0, 0],
   [0, 0, 4, 0, 2, 0, 3, 0, 0]];
 
-let gridToggle = [[1, 1, 0, 0, 1, 0, 0, 0, 0],
+let gridInitial = [[1, 1, 0, 0, 1, 0, 0, 0, 0],
   [1, 1, 1, 0, 1, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 1, 1, 0, 0],
   [0, 0, 0, 0, 1, 1, 0, 1, 0],
@@ -33,8 +33,8 @@ let gridToggle = [[1, 1, 0, 0, 1, 0, 0, 0, 0],
   [0, 0, 1, 0, 1, 0, 1, 0, 0]];
 
 let cellSize;
-// const OPEN_TILE = 0;
-// const IMPASSIBLE = 1;
+const OPEN_TILE = 0;
+const IMPASSIBLE = 1;
 // let newText = false;
 let state = "playing";
 
@@ -44,6 +44,7 @@ function setup() {
   //make the canvas the largest square that you can...
   if (windowWidth < windowHeight) {
     createCanvas(windowWidth, windowWidth);
+  //   rect(300, 20, 100, 50);
   }
   else {
     createCanvas(windowHeight, windowHeight);
@@ -73,8 +74,11 @@ function windowResized() {
 function draw() {
   background(220);
   displayGrid();
+  displaySquare();
+  
   lines();
   displayNumbers();
+  
   // toggleCell();
   checkState();
   if(state === "done"){
@@ -85,7 +89,10 @@ function draw() {
 }
 
 function checkState(){
-  if(mouseIsPressed && state === "playing" && mouseY > cellSize){
+  let x = Math.floor(mouseX/cellSize);
+  let y = Math.floor(mouseY/cellSize);
+  let doneBottom = collideRectRect(x * cellSize, y * cellSize, cellSize, cellSize, cellSize * 9, 0, 100, 50);
+  if(mouseIsPressed && state === "playing" && doneBottom){
     state = "done";
   }
 }
@@ -95,7 +102,7 @@ function solve(){
 }
 
 function displaySquare(){
-  square();
+  rect( cellSize * 9, 0, 100, 50);
 }
 
 function lines(){
@@ -108,11 +115,28 @@ function lines(){
 
 function displayGrid() {
   strokeWeight(1);
-  for (let y = 0; y < grid.length; y++) {
-    for (let x = 0; x < grid[y].length; x++) {
+  for (let y = 0; y < gridInitial.length; y++) {
+    for (let x = 0; x < gridInitial[y].length; x++) {
+      fill("white");
       square(x * cellSize, y * cellSize, cellSize);
+      if (gridInitial[y][x] === OPEN_TILE && state === "typing") {
+        fill("blue");
+        let x = Math.floor(mouseX/cellSize);
+        let y = Math.floor(mouseY/cellSize);
+        square(x * cellSize, y * cellSize, cellSize);
+      }
+      
     }
   }
+}
+
+function mouseClicked(){
+    if(state === "playing" && mouseIsPressed){
+      state = "typing";
+    }
+    else if(state === "typing"){
+      state = "playing";
+    }
 }
 
 function displayNumbers(){
@@ -122,35 +146,42 @@ function displayNumbers(){
     for(let x = 0; x< grid[y].length; x++){
       let xText = x * cellSize + cellSize/2;
       let yText = y * cellSize + cellSize/2;
-      if(grid[y][x] === 1 || (solvedGrid[y][x] === 1 && state === "done") ){
+      if(grid[y][x] === 1){
+        fill("black");
         text("1", xText , yText);
+        
       }
       if(grid[y][x] === 2){
+        fill("black");
         text("2",xText , yText);
       }
       if(grid[y][x] === 3){
+        fill("black");
         text("3", xText , yText);
       }
       if(grid[y][x] === 4){
+        fill("black");
         text("4",  xText , yText);
       }
       if(grid[y][x] === 5){
+        fill("black");
         text("5",xText , yText);
       }
       if(grid[y][x] === 6){
+        fill("black");
         text("6",  xText , yText);
       }
       if(grid[y][x] === 7){
+        fill("black");
         text("7", xText , yText);
       }
       if(grid[y][x] === 8){
+        fill("black");
         text("8", xText , yText);
       }
       if(grid[y][x] === 9){
+        fill("black");
         text("9", xText , yText);
-      }
-      if(grid[y][x] === 0){
-        text(" ",  xText , yText);
       }
     }
   }
@@ -162,10 +193,11 @@ function keyPressed(){
   let x = Math.floor(mouseX/cellSize);
   let y = Math.floor(mouseY/cellSize);
 
-  if(gridToggle[y][x] === 0){
+  if(gridInitial[y][x] === 0 && mouseIsPressed){
+    state = "typing";
     if(key === "1"){
       grid[y][x] = 1;
-      // newText = true;
+      
     }
     else if(key === "2"){
       grid[y][x] = 2;
@@ -191,9 +223,24 @@ function keyPressed(){
     else if(key === "9"){
       grid[y][x] = 9;
     }
+    else{
+      state = "playing";
+    }
   }
   
-  if(keyCode === BACKSPACE && gridToggle[y][x] === 0 ){
+  if(keyCode === BACKSPACE && gridInitial[y][x] === 0 ){
     grid[y][x] = 0;
   }
+
+//   for(let y = 0; y< grid.length; y++){
+//     for(let x = 0; x< grid[y].length; x++){
+//       if(grid[y][x] === 1 && key === "1"){
+//       fill("blue");
+//     }
+//     // else{
+//     //   fill("white");
+//     // }
+//     }
+    
+// }
 }
