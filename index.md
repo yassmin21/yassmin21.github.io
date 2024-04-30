@@ -7,6 +7,7 @@
 - [terraine generation](07-terrain)
 - [bubble movement](08-bubble)
 - [2D Grid](09-grid)
+- [Walker OOP](10-Walker)
 
 
 ## projects
