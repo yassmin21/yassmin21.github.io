@@ -61,7 +61,7 @@ function setup() {
     createCanvas(windowHeight, windowHeight);
   }
   
-  cellSize = height/grid.length;
+  cellSize = (height/grid.length);
 
   
   textSize(cellSize*0.5);
@@ -78,7 +78,7 @@ function windowResized() {
   }
 
   
-  cellSize = height/grid.length;
+  cellSize = (height/grid.length);
 
   //makes the text be smaller as screen smaller
   textSize(cellSize*0.5);
@@ -141,7 +141,7 @@ function changeState(){
     && mouseY > height/2 + xBotton - 20
     && mouseX < width/2 + 80 
     && mouseY < height/2 + xBotton + 20){
-    state = "howToPlay";
+      state = "howToPlay";
     }
   }
      
@@ -162,8 +162,8 @@ function displayGrid() {
   for (let y = 0; y < gridInitial.length; y++) {
     for (let x = 0; x < gridInitial[y].length; x++) {
 
-      //makes all the squares white
-      fill("white");
+      //makes all the squares pink
+      fill("pink");
       square(x * cellSize, y * cellSize, cellSize);
 
       //if the state is playing or typing it adds a light blue highlight to the square you are on with the mouse
@@ -195,7 +195,7 @@ function displayNumbers(){
       let xText = x * cellSize + cellSize/2;
       let yText = y * cellSize + cellSize/2;
 
-      fill("black");
+      fill("purple");
 
       //checks to see if this is in the initial grid or not and if it is then it makes it bold
       if(gridInitial[y][x] === IMPASSIBLE){
@@ -210,7 +210,7 @@ function displayNumbers(){
         text("1", xText , yText);
       }
       else if(grid[y][x] === 2){
-       text("2", xText , yText);
+        text("2", xText , yText);
       }
       else if(grid[y][x] === 3){
         text("3", xText , yText);
@@ -229,7 +229,7 @@ function displayNumbers(){
       }
       else if(grid[y][x] === 8){
         text("8", xText , yText);
-     }
+      }
       else if(grid[y][x] === 9){
         text("9", xText , yText);
       
