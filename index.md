@@ -12,6 +12,8 @@
 - [FireWorks](15-Fireworks)
 - [connected nodes](16- nodes)
 - [clickable botton demo](17-clickable)
+- [recursive circles](18-recursive)
+- [sierpinski triangle](20-sierpinski)
 
 
 ## projects
